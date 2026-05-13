@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+/* Testing purpose  */
+.yoki {
+  @apply border border-red-500;
+}
+
+.yokii {
+  @apply border border-blue-500;
+}
+
+.yokiii {
+  @apply border border-green-500;
+}
