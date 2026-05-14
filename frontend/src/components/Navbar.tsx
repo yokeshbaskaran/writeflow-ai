@@ -1,40 +1,83 @@
+import { BiMessageRoundedAdd } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import { IoHomeOutline, IoSearch } from "react-icons/io5";
+import { MdLockPerson } from "react-icons/md";
+import { TbBellRinging } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import DarkMode from "./DarkMode";
+import { useState } from "react";
 
 const Navbar = () => {
-  const headings = [
+  const [authUser, setAuthUser] = useState(false);
+
+  const unauthenticatedNav = [
     {
-      linkName: "Home",
       link: "/",
-      icon: "<CgProfile size={25} />",
+      icon: <IoHomeOutline size={25} />,
+      linkName: "Home",
     },
     {
-      linkName: "Login",
-      link: "auth",
-      icon: "<CgProfile size={25} />",
+      link: "/auth",
+      icon: <MdLockPerson size={25} />,
+      linkName: "Login/SignUp",
     },
   ];
 
+  const authenticatedNav = [
+    {
+      link: "/",
+      icon: <IoHomeOutline size={25} />,
+      linkName: "Home",
+    },
+    {
+      link: "/myprofile",
+      icon: <CgProfile size={25} />,
+      linkName: "Profile",
+    },
+    {
+      link: "/search",
+      icon: <IoSearch size={25} />,
+      linkName: "Search",
+    },
+    {
+      link: "/notifications",
+      icon: <TbBellRinging size={25} />,
+      linkName: "Notifications",
+    },
+    {
+      link: "/create",
+      icon: <BiMessageRoundedAdd size={25} />,
+      linkName: "Create Post",
+    },
+  ];
+
+  const navDetails = authUser ? authenticatedNav : unauthenticatedNav;
+
   return (
     <>
-      <section className="yoki h-14 px-3 py-5 border-border flex items-center bg-bg">
-        <div className="yoki w-full flex items-center justify-between">
+      <section className="h-14 px-3 py-5 border-b border-border flex items-center bg-bg">
+        <div className="w-full flex items-center justify-between">
           <div>
-            <h2>WriteFlow.ai</h2>
+            <h2 className="text-xl font-bold text-primary">
+              WriteFlow<span className="text-text">.ai</span>
+            </h2>
           </div>
 
-          <div className="yokii flex items-center gap-2">
-            {headings.map((item, idx) => (
+          <div className="flex items-center gap-5">
+            {navDetails.map((item, idx) => (
               <Link
                 key={idx}
-                to={`/${item.link}`}
-                className="text-gray-300 hove:text-white transition-colors capitalize"
+                to={`${item.link}`}
+                className="text-text hove:text-white transition-colors capitalize"
               >
                 {item.linkName}
               </Link>
             ))}
           </div>
 
-          <div className="yokiii">Dark_lightMode</div>
+          <div>
+            <DarkMode />
+          </div>
         </div>
       </section>
     </>
