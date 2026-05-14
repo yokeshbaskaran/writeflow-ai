@@ -1,15 +1,18 @@
+import { useAppContext } from "../context/AppContext";
 import Footer from "./Footer";
 
 const Login = () => {
+  const { pathToHome } = useAppContext();
+
   return (
     <>
-      <section className="yoki w-full h-screen flex flex-col justify-start items-center">
+      <section className="w-full h-screen flex flex-col justify-start items-center bg-[#fcfcfc]">
         <div className="mt-10 mb-5 flex flex-col items-center gap-5">
-          <h2 className="text-4xl font-bold">writeflow.ai</h2>
+          <h2 className="text-4xl font-bold text-primary">writeflow.ai</h2>
           <h3 className="text-lg font-medium">Login/SignUp</h3>
         </div>
 
-        <div className="w-110 mt-5 px-15 pt-5 pb-5 border border-zinc-400 rounded">
+        <div className="w-110 mt-5 px-10 pt-5 pb-5 bg-[#fefefe] border border-border rounded shado">
           <div className="w-full flex flex-col">
             {/* Email Address: */}
 
@@ -46,6 +49,14 @@ const Login = () => {
             </div>
           </div>
         </div>
+
+        <button
+          onClick={pathToHome}
+          className="my-10 p-4 text-primary border-2 border-primary rounded hover:bg-primary hover:text-primary-light cursor-pointer"
+        >
+          Return to Home
+        </button>
+
         <Footer />
       </section>
     </>
