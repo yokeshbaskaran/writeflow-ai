@@ -1,66 +1,101 @@
+import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import Footer from "./Footer";
 
-const Login = () => {
+const Authpage = () => {
   const { pathToHome } = useAppContext();
+  const [logined, setLogined] = useState(false);
+
+  const handleAuth = () => {
+    //Auth
+  };
 
   return (
     <>
-      <section className="w-full h-screen flex flex-col justify-start items-center bg-[#fcfcfc]">
-        <div className="mt-10 mb-5 flex flex-col items-center gap-5">
-          <h2 className="text-4xl font-bold text-primary">writeflow.ai</h2>
-          <h3 className="text-lg font-medium">Login/SignUp</h3>
+      <section className="w-full h-screen flex flex-col justify-start items-center bg-bg">
+        <div className="mt-8 mb-3 flex flex-col items-center gap-2">
+          <img src="login.png" alt="logo" width={60} height={50} />
+
+          <h3 className="mt-3 text-text text-2xl font-medium">
+            {logined ? "Create an account" : "Login to your account "}
+          </h3>
+
+          <p className="text-text-muted">
+            Enter your details to {logined ? "create new account" : "login"}
+          </p>
         </div>
 
-        <div className="w-110 mt-5 px-10 pt-5 pb-5 bg-[#fefefe] border border-border rounded shado">
+        <div className="md:w-110 mt-1 px-12 pt-5 pb-5 bg-bg-hover border border-border rounded shado">
           <div className="w-full flex flex-col">
             {/* Email Address: */}
 
-            <div className="flex flex-col items-start gap-2">
-              <p className="mt-5 font-medium">Email:</p>
+            <div className="flex text-text flex-col items-start gap-2">
+              <div className="w-full">
+                <p className="my-2 font-medium">Email:</p>
 
-              <input
-                type="text"
-                className="w-full px-2 py-2 border border-zinc-400 rounded"
-                placeholder="enter email address"
-              />
+                <input
+                  type="email"
+                  className="w-full px-2 py-2 border border-zinc-400 rounded"
+                  placeholder="enter email address"
+                />
+              </div>
 
-              <button className="w-full h-10 mt-3 bg-[#693EE0] rounded text-white">
+              <div className="w-full">
+                <p className="my-2 font-medium">Password:</p>
+
+                <input
+                  type="password"
+                  className="w-full px-2 py-2 border border-zinc-400 rounded"
+                  placeholder="enter password"
+                />
+              </div>
+
+              <button
+                onClick={handleAuth}
+                className="w-full h-10 mt-3 bg-primary hover:bg-primary-hover rounded text-white cursor-pointer"
+              >
                 Submit
               </button>
             </div>
 
             {/* Divider*/}
-            <div className="my-5 border border-zinc-200"></div>
+            <div className="my-5 border border-border-strong"></div>
 
             {/* Signup/login account*/}
-            <div className="flex justify-center items-center gap-2">
-              <p>Don't have an account?</p>
-              <button className="text-violet-500 hover:underline cursor-pointer">
-                Sign up
-              </button>
-            </div>
-
-            <div className="flex justify-center items-center gap-2">
-              <p>Already have an account?</p>
-              <button className="text-violet-500 hover:underline cursor-pointer">
-                Login
-              </button>
+            <div className="text-text flex justify-center items-center gap-2">
+              {logined ? (
+                <>
+                  <p>Already have an account?</p>
+                  <button
+                    onClick={() => setLogined(!logined)}
+                    className="text-primary hover:underline cursor-pointer"
+                  >
+                    Login
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p>Don't have an account?</p>
+                  <button
+                    onClick={() => setLogined(!logined)}
+                    className="text-primary hover:underline cursor-pointer"
+                  >
+                    Sign up
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
 
         <button
           onClick={pathToHome}
-          className="my-10 p-4 text-primary border-2 border-primary rounded hover:bg-primary hover:text-primary-light cursor-pointer"
+          className="my-8 p-4 text-primary border-2 border-primary rounded hover:bg-primary hover:text-white cursor-pointer"
         >
           Return to Home
         </button>
-
-        <Footer />
       </section>
     </>
   );
 };
 
-export default Login;
+export default Authpage;
