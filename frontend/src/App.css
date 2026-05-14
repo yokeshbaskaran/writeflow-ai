@@ -1,4 +1,53 @@
 @import "tailwindcss";
+/* --color-primary: #693ee0; */
+
+@theme {
+  /* Primary */
+  --color-primary: #693ee0;
+  --color-primary-hover: #5b35c7;
+  --color-primary-light: #f3efff;
+
+  /* Background */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f8f9fa;
+  --color-bg-hover: #f1f3f5;
+
+  /* Borders */
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+
+  /* Text */
+  --color-text: #111827;
+  --color-text-muted: #6b7280;
+
+  /* Accent (optional) */
+  --color-success: #00a832;
+  --color-danger: #ef4444;
+}
+
+.dark {
+  /*  DARK MODE */
+  --color-primary: #8b5cf6;
+  --color-primary-hover: #7c3aed;
+  --color-primary-light: rgba(139, 92, 246, 0.15);
+
+  /* Background */
+  --color-bg: #212121;
+  --color-bg-soft: #181818;
+  --color-bg-hover: #303030;
+
+  /* Borders */
+  --color-border: #1f2937;
+  --color-border-strong: #374151;
+
+  /* Text */
+  --color-text: #f9fafb;
+  --color-text-muted: #9ca3af;
+
+  /* Status */
+  --color-success: #22c55e;
+  --color-danger: #f87171;
+}
 
 /* Testing purpose  */
 .yoki {
