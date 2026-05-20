@@ -59,6 +59,13 @@ const Navbar = () => {
     <>
       <section className="h-14 px-3 py-5 border-b border-border flex items-center bg-bg">
         <div className="w-full flex items-center justify-between">
+          {/* Backdrop overlay  */}
+          {mobileNav && (
+            <>
+              <div className="fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+            </>
+          )}
+
           {/* Mobile Navbar  */}
           {
             <>
