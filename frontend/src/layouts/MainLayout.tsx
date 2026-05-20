@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Home from "../pages/Home";
 
 const MainLayout = () => {
   return (
@@ -6,8 +7,7 @@ const MainLayout = () => {
       <section className="bg-bg text-text h-screen">
         <div className="flex flex-col">
           <Navbar />
-
-          <div>Homepage</div>
+          <Home />
         </div>
       </section>
     </>
