@@ -34,7 +34,7 @@ const Authpage = () => {
 
                 <input
                   type="email"
-                  className="w-full px-2 py-2 border border-zinc-400 rounded"
+                  className="w-full px-2 py-2 border border-primary rounded"
                   placeholder="enter email address"
                 />
               </div>
@@ -44,7 +44,7 @@ const Authpage = () => {
 
                 <input
                   type="password"
-                  className="w-full px-2 py-2 border border-zinc-400 rounded"
+                  className="w-full px-2 py-2 border border-primary  rounded"
                   placeholder="enter password"
                 />
               </div>
@@ -89,7 +89,7 @@ const Authpage = () => {
 
         <button
           onClick={pathToHome}
-          className="my-8 p-4 text-primary border-2 border-primary rounded hover:bg-primary hover:text-white cursor-pointer"
+          className="my-8 p-4 text-primary border-2 border-primary rounded-xs hover:bg-primary hover:text-white cursor-pointer"
         >
           Return to Home
         </button>
