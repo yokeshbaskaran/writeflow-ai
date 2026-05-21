@@ -7,11 +7,18 @@ type AuthStateType = {
   password: string;
 };
 
+type UserType = {
+  email: string;
+  username: string;
+};
+
 type AppContextType = {
   pathToHome: () => void;
   auth: AuthStateType | null;
   login: (email: string, password: string) => void;
   logout: () => void;
+  authUser: UserType | null;
+  setAuthUser: (user: UserType | null) => void;
 };
 
 const AppContext = createContext({} as AppContextType);
@@ -28,6 +35,7 @@ type AppContextProviderType = {
 export const AppContextProvider = ({ children }: AppContextProviderType) => {
   // dummy authentication
   const [auth, setAuth] = useState<AuthStateType | null>(null);
+  const [authUser, setAuthUser] = useState<UserType | null>(null);
 
   //when page reloads
   useEffect(() => {
@@ -57,7 +65,15 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   };
 
   //context values
-  const contextValue = { pathToHome, auth, login, logout };
+  const contextValue = {
+    pathToHome,
+    // auth
+    auth,
+    login,
+    logout,
+    authUser,
+    setAuthUser,
+  };
 
   return (
     <>
