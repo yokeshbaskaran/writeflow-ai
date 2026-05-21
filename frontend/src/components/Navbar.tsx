@@ -4,13 +4,16 @@ import { IoHomeOutline } from "react-icons/io5";
 import { MdLockPerson, MdOutlineClose } from "react-icons/md";
 import { TbBellRinging } from "react-icons/tb";
 import { RiMenu5Fill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import { useState } from "react";
+import { useAppContext } from "../context/AppContext";
 
 const Navbar = () => {
-  const [authUser] = useState(false);
+  const { authUser, logout } = useAppContext();
   const [mobileNav, setMobileNav] = useState(false);
+
+  const { pathname } = useLocation();
 
   const unauthenticatedNav = [
     {
@@ -58,7 +61,7 @@ const Navbar = () => {
   return (
     <>
       <section className="h-14 px-3 py-5 border-b border-border flex items-center bg-bg">
-        <div className="w-full flex items-center justify-between yoki">
+        <div className="w-full flex items-center justify-between">
           {/* i) Mobile Navbar  */}
 
           <div className="md:hidden">
@@ -89,7 +92,31 @@ const Navbar = () => {
                   </div>
 
                   {/* 2. Nav List  */}
-                  <div></div>
+                  <div>
+                    <nav className="mb-auto mt-2">
+                      <ul className="flex flex-col gap-3">
+                        {navDetails.map((item, idx) => {
+                          const isActive = pathname === item.link;
+
+                          return (
+                            <li key={idx}>
+                              <Link
+                                to={item.link}
+                                className={`px-2 py-2 flex items-center gap-3 rounded transition-colors duration-300 ${
+                                  isActive
+                                    ? "bg-appColor text-white"
+                                    : "hover:text-appColor text-black"
+                                }`}
+                              >
+                                {item.icon}
+                                <span className="text-lg">{item.linkName}</span>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </nav>
+                  </div>
                 </div>
               </>
             )}
@@ -115,7 +142,7 @@ const Navbar = () => {
             </h2>
           </div>
 
-          <div className="max-md:hidden mx-5 w-full flex items-center justify-center">
+          <div className="max-md:hidden mx-5 w-full flex items-center justify-center gap-2">
             {/* ii) Navbar list  */}
             <div className="flex items-center gap-5">
               {navDetails.map((item, idx) => (
@@ -128,6 +155,16 @@ const Navbar = () => {
                 </Link>
               ))}
             </div>
+
+            {/* Logout only exist when user logined */}
+            {authUser && (
+              <button
+                onClick={logout}
+                className="mx-2 px-2 py-1 text-red-700 bg-bg-hover rounded cursor-pointer"
+              >
+                Logout
+              </button>
+            )}
           </div>
 
           <div>
