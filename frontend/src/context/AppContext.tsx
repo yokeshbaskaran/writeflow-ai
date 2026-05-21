@@ -10,6 +10,7 @@ type AuthStateType = {
 type AppContextType = {
   pathToHome: () => void;
   auth: AuthStateType | null;
+  login: (username: string, password: string) => void;
 };
 
 const AppContext = createContext({} as AppContextType);
@@ -31,10 +32,17 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   useEffect(() => {
     const stored = localStorage.getItem("userdata");
 
-    if (stored) {
-      setAuth(JSON.parse(stored));
-    }
+    if (!stored) return;
+    setAuth(JSON.parse(stored));
   }, []);
+
+  // dummy User login
+  const login = (username: string, password: string) => {
+    const authData = { username, password };
+
+    setAuth(authData);
+    localStorage.setItem("userdata", JSON.stringify(authData));
+  };
 
   // Redirects to Homepage
   const navigate = useNavigate();
@@ -43,7 +51,7 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   };
 
   //context values
-  const contextValue = { auth, pathToHome };
+  const contextValue = { pathToHome, auth, login };
 
   return (
     <>
