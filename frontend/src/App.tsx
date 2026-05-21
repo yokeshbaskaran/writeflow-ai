@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
 import MainLayout from "./layouts/MainLayout";
-import Generate from "./pages/Generate";
 import Dashboard from "./pages/Dashboard";
+import Create from "./pages/Create";
 
 const App = () => {
   return (
@@ -14,7 +14,7 @@ const App = () => {
           {/* User Route */}
           <Route path="/" element={<MainLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="create" element={<Generate />} />
+            <Route path="create" element={<Create />} />
           </Route>
 
           {/* Auth Route */}

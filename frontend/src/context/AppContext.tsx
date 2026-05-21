@@ -7,6 +7,20 @@ type AuthStateType = {
   password: string;
 };
 
+// type ResponseSectionType = {
+//   heading: string;
+//   content: string;
+// };
+
+// type AiResponseType = {
+//   title: string;
+//   introduction: string;
+//   sections: ResponseSectionType[];
+//   conclusion: string;
+// };
+
+// export const API_URL = "http://127.0.0.1:8000";
+
 type AppContextType = {
   pathToHome: () => void;
   login: (email: string, password: string) => void;

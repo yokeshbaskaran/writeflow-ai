@@ -35,6 +35,11 @@ const Navbar = () => {
       linkName: "Home",
     },
     {
+      link: "/create",
+      icon: <BiMessageRoundedAdd size={25} />,
+      linkName: "Generate",
+    },
+    {
       link: "/myprofile",
       icon: <CgProfile size={25} />,
       linkName: "Profile",
@@ -48,11 +53,6 @@ const Navbar = () => {
       link: "/notifications",
       icon: <TbBellRinging size={25} />,
       linkName: "Notifications",
-    },
-    {
-      link: "/create",
-      icon: <BiMessageRoundedAdd size={25} />,
-      linkName: "Create Post",
     },
   ];
 
