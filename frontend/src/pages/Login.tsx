@@ -2,11 +2,19 @@ import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 
 const Authpage = () => {
-  const { pathToHome } = useAppContext();
+  const { pathToHome, login } = useAppContext();
   const [logined, setLogined] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleAuth = () => {
-    //Auth
+    //dummy login
+    login(email, password);
+    setEmail("");
+    setPassword("");
+    console.log("Login success!");
+    pathToHome();
   };
 
   return (
@@ -36,6 +44,8 @@ const Authpage = () => {
                   type="email"
                   className="w-full px-2 py-2 border border-primary rounded"
                   placeholder="enter email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
@@ -46,6 +56,8 @@ const Authpage = () => {
                   type="password"
                   className="w-full px-2 py-2 border border-primary  rounded"
                   placeholder="enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
