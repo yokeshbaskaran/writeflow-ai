@@ -1,0 +1,21 @@
+Steps for Python Backend Setup:
+---
+1. create main.py
+2. Setup FastAPI
+    Install cmd:  pip install fastapi uvicorn
+- Extra cmds:
+-----
+python --version
+pip --version
+3. in "main.py" file, add the app from fastapi and create the routes
+4. use command:  uvicorn main:app --reload
+- will get "INFO: Uvicorn running on http://127.0.0.1:8000 "
+
+----------for starting--------------
+
+Commands used:
+---
+pip install fastapi uvicorn
+uvicorn main:app --reload
+pip install groq   
+pip install python-dotenv
