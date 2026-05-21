@@ -7,18 +7,12 @@ type AuthStateType = {
   password: string;
 };
 
-type UserType = {
-  email: string;
-  username: string;
-};
-
 type AppContextType = {
   pathToHome: () => void;
-  auth: AuthStateType | null;
   login: (email: string, password: string) => void;
   logout: () => void;
-  authUser: UserType | null;
-  setAuthUser: (user: UserType | null) => void;
+  authUser: AuthStateType | null;
+  setAuthUser: (user: AuthStateType | null) => void;
 };
 
 const AppContext = createContext({} as AppContextType);
@@ -34,28 +28,27 @@ type AppContextProviderType = {
 
 export const AppContextProvider = ({ children }: AppContextProviderType) => {
   // dummy authentication
-  const [auth, setAuth] = useState<AuthStateType | null>(null);
-  const [authUser, setAuthUser] = useState<UserType | null>(null);
+  const [authUser, setAuthUser] = useState<AuthStateType | null>(null);
 
   //when page reloads
   useEffect(() => {
     const stored = localStorage.getItem("userdata");
 
     if (!stored) return;
-    setAuth(JSON.parse(stored));
+    setAuthUser(JSON.parse(stored));
   }, []);
 
   // dummy User login
   const login = (email: string, password: string) => {
     const authData = { email, password };
 
-    setAuth(authData);
+    setAuthUser(authData);
     localStorage.setItem("userdata", JSON.stringify(authData));
   };
 
   // dummy User Logout
   const logout = () => {
-    setAuth(null);
+    setAuthUser(null);
   };
 
   // Redirects to Homepage
@@ -68,7 +61,6 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   const contextValue = {
     pathToHome,
     // auth
-    auth,
     login,
     logout,
     authUser,
