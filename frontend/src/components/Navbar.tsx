@@ -1,9 +1,9 @@
 import { BiMessageRoundedAdd } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import { IoHomeOutline, IoSearch } from "react-icons/io5";
-import { MdLockPerson } from "react-icons/md";
+import { IoHomeOutline } from "react-icons/io5";
+import { MdLockPerson, MdOutlineClose } from "react-icons/md";
 import { TbBellRinging } from "react-icons/tb";
-import { RiMenuUnfold3Line, RiMenuUnfold4Line } from "react-icons/ri";
+import { RiMenu5Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import { useState } from "react";
@@ -36,11 +36,11 @@ const Navbar = () => {
       icon: <CgProfile size={25} />,
       linkName: "Profile",
     },
-    {
-      link: "/search",
-      icon: <IoSearch size={25} />,
-      linkName: "Search",
-    },
+    // {
+    //   link: "/search",
+    //   icon: <IoSearch size={25} />,
+    //   linkName: "Search",
+    // },
     {
       link: "/notifications",
       icon: <TbBellRinging size={25} />,
@@ -58,44 +58,65 @@ const Navbar = () => {
   return (
     <>
       <section className="h-14 px-3 py-5 border-b border-border flex items-center bg-bg">
-        <div className="w-full flex items-center justify-between">
-          {/* Backdrop overlay  */}
-          {mobileNav && (
-            <>
-              <div className="fixed inset-0 bg-black/50 z-40 md:hidden"></div>
-            </>
-          )}
+        <div className="w-full flex items-center justify-between yoki">
+          {/* i) Mobile Navbar  */}
 
-          {/* Mobile Navbar  */}
-          {
-            <>
-              <div className="md:hidden">
+          <div className="md:hidden">
+            {mobileNav && (
+              <>
+                {/* Backdrop overlay  */}
+                <div
+                  onClick={() => setMobileNav(!mobileNav)}
+                  className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                ></div>
+
+                {/* Sidebar Nav  */}
+                <div className="fixed top-0 left-0 w-64 h-screen p-1 z-50 yokii bg-bg">
+                  {/* 1. Logo  */}
+                  <div className="px-1 py-2 flex items-center justify-between border-b border-border-strong">
+                    {/* Project Text Logo  */}
+                    <div>
+                      <h2 className="text-xl font-bold text-primary">
+                        WriteFlow<span className="text-text">.ai</span>
+                      </h2>
+                    </div>
+                    <button
+                      className="cursor-pointer"
+                      onClick={() => setMobileNav(!mobileNav)}
+                    >
+                      <MdOutlineClose size={25} />
+                    </button>
+                  </div>
+
+                  {/* 2. Nav List  */}
+                  <div></div>
+                </div>
+              </>
+            )}
+
+            {
+              <>
                 <div
                   onClick={() => setMobileNav(!mobileNav)}
                   className="p-2 text-white bg-primary rounded"
                 >
-                  {mobileNav ? (
-                    <>
-                      <RiMenuUnfold4Line size={20} />
-                    </>
-                  ) : (
-                    <>
-                      <RiMenuUnfold3Line size={20} />
-                    </>
-                  )}
+                  <RiMenu5Fill size={20} />
                 </div>
-              </div>
-            </>
-          }
+              </>
+            }
+          </div>
+          {/* i) Mobile Navbar  */}
 
+          {/* ii) Desktop Navbar  */}
           <div>
+            {/* Project Text Logo  */}
             <h2 className="text-xl font-bold text-primary">
               WriteFlow<span className="text-text">.ai</span>
             </h2>
           </div>
 
-          {/* Desktop Navbar  */}
           <div className="max-md:hidden mx-5 w-full flex items-center justify-center">
+            {/* ii) Navbar list  */}
             <div className="flex items-center gap-5">
               {navDetails.map((item, idx) => (
                 <Link
