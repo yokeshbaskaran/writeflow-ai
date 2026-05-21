@@ -1,5 +1,6 @@
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Home from "../pages/Home";
+// import Home from "../pages/Home";
 
 const MainLayout = () => {
   return (
@@ -7,7 +8,10 @@ const MainLayout = () => {
       <section className="bg-bg text-text h-screen">
         <div className="flex flex-col">
           <Navbar />
-          <Home />
+
+          <div className="yoki p-2">
+            <Outlet />
+          </div>
         </div>
       </section>
     </>
