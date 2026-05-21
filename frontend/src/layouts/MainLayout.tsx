@@ -5,13 +5,13 @@ import Navbar from "../components/Navbar";
 const MainLayout = () => {
   return (
     <>
-      <section className="bg-bg text-text h-screen">
-        <div className="flex flex-col">
+      <section className="flex flex-col h-screen bg-bg text-text">
+        <div>
           <Navbar />
+        </div>
 
-          <div className="yoki p-2">
-            <Outlet />
-          </div>
+        <div className="flex-1 flex flex-col">
+          <Outlet />
         </div>
       </section>
     </>
