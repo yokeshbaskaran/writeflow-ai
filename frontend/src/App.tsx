@@ -3,6 +3,7 @@ import "./App.css";
 import Login from "./pages/Login";
 import MainLayout from "./layouts/MainLayout";
 import Generate from "./pages/Generate";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Routes>
           {/* User Route */}
           <Route path="/" element={<MainLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="create" element={<Generate />} />
           </Route>
 
