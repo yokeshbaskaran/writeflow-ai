@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 //types
 type AuthStateType = {
-  username: string;
+  email: string;
   password: string;
 };
 
 type AppContextType = {
   pathToHome: () => void;
   auth: AuthStateType | null;
-  login: (username: string, password: string) => void;
+  login: (email: string, password: string) => void;
+  logout: () => void;
 };
 
 const AppContext = createContext({} as AppContextType);
@@ -37,11 +38,16 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   }, []);
 
   // dummy User login
-  const login = (username: string, password: string) => {
-    const authData = { username, password };
+  const login = (email: string, password: string) => {
+    const authData = { email, password };
 
     setAuth(authData);
     localStorage.setItem("userdata", JSON.stringify(authData));
+  };
+
+  // dummy User Logout
+  const logout = () => {
+    setAuth(null);
   };
 
   // Redirects to Homepage
@@ -51,7 +57,7 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   };
 
   //context values
-  const contextValue = { pathToHome, auth, login };
+  const contextValue = { pathToHome, auth, login, logout };
 
   return (
     <>
