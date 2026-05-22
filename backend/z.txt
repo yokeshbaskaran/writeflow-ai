@@ -13,9 +13,120 @@ pip --version
 
 ----------for starting--------------
 
+---
 Commands used:
 ---
-pip install fastapi uvicorn
-uvicorn main:app --reload
-pip install groq   
+pip install fastapi
+pip install uvicorn
+pip install sqlalchemy
+pip install python-jose
+pip install passlib[bcrypt]
+pip install python-multipart
 pip install python-dotenv
+pip install groq   
+pip install pymongo 
+
+---
+Other:
+---
+uvicorn main:app --reload
+pip freeze > requirements.txt
+ 
+why __pycache__ is installed on every folder?
+--- Hides in vscode ---
+"files.exclude": {
+  "**/__pycache__": true,
+  "**/*.pyc": true
+}
+
+-----
+Error faced:
+-----
+1. ModuleNotFoundError: No module named 'app' -> Reason: app. import file from another folder, type "without app.--"
+
+Error:- ERROR:   Error loading ASGI app. Could not import module "main".
+and
+  from routes.auth_routes import router as auth_router
+ModuleNotFoundError: No module named 'routes'
+
+  - when errors came, start app make sure inside app folder
+path: Project\writeflow-ai\backend\app 
+--> cmd: 
+  uvicorn main:app --reload
+or
+path: Project\writeflow-ai\backend\
+--> cmd: 
+  uvicorn app.main:app --reload
+
+2.  print("findUser:", findUser.email)    - wrong
+    print("findUser:", findUser["email"]) - correct
+
+AI Prompt:
+---
+
+ response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {"role": "system", "content": "You are a professional content writer."},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.7,
+        max_tokens=2000,
+    )
+
+    content = response.choices[0].message.content
+
+    print("AI reponse:", content)
+    return content
+
+
+
+
+
+topic = "write a blog post about benefits of using ai in daily life"
+tone = "professional"
+length = "medium"
+instructions = "Include examples and conclusion"
+
+prompt = f"""
+You are an expert content writer.
+
+Write a professional blog post.
+
+Topic:
+{topic}
+
+Tone:
+{tone}
+
+Length:
+{length}
+
+Requirements:
+- Use a compelling title
+- Add introduction
+- Add 3-5 headings
+- Use paragraphs
+- Include examples
+- Add conclusion
+- Return clean markdown
+
+Additional Instructions:
+{instructions}
+
+Return ONLY valid JSON.
+
+Format:
+
+{{
+  "title": "",
+  "introduction": "",
+  "sections": [
+    {{
+      "heading": "",
+      "content": ""
+    }}
+  ],
+  "conclusion": ""
+}}
+"""
