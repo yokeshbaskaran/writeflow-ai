@@ -1,9 +1,8 @@
-import { BiMessageRoundedAdd } from "react-icons/bi";
-import { CgProfile } from "react-icons/cg";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdLockPerson, MdOutlineClose } from "react-icons/md";
-import { TbBellRinging } from "react-icons/tb";
-import { RiMenu5Fill } from "react-icons/ri";
+import { RxDashboard } from "react-icons/rx";
+import { RiMenu5Fill, RiAiGenerateText } from "react-icons/ri";
+
 import { Link, useLocation } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import { useState } from "react";
@@ -36,19 +35,14 @@ const Navbar = () => {
     },
     {
       link: "/dashboard",
-      icon: <BiMessageRoundedAdd size={25} />,
+      icon: <RxDashboard size={25} />,
       linkName: "Dashboard",
     },
     {
       link: "/create",
-      icon: <BiMessageRoundedAdd size={25} />,
+      icon: <RiAiGenerateText size={25} />,
       linkName: "Generate",
     },
-    // {
-    //   link: "/myprofile",
-    //   icon: <CgProfile size={25} />,
-    //   linkName: "Profile",
-    // },
     // {
     //   link: "/search",
     //   icon: <IoSearch size={25} />,
@@ -79,7 +73,7 @@ const Navbar = () => {
                 ></div>
 
                 {/* Sidebar Nav  */}
-                <div className="fixed top-0 left-0 w-64 h-screen p-1 z-50 yokii bg-bg">
+                <div className="fixed top-0 left-0 w-64 h-screen px-2 py-1 z-50 bg-bg border-r border-border-strong">
                   {/* 1. Logo  */}
                   <div className="px-1 py-2 flex items-center justify-between border-b border-border-strong">
                     {/* Project Text Logo  */}
@@ -109,8 +103,8 @@ const Navbar = () => {
                                 to={item.link}
                                 className={`px-2 py-2 flex items-center gap-3 rounded transition-colors duration-300 ${
                                   isActive
-                                    ? "bg-appColor text-white"
-                                    : "hover:text-appColor text-black"
+                                    ? "bg-primary text-text"
+                                    : "hover:text-primary hover:bg-bg-hover"
                                 }`}
                               >
                                 {item.icon}
