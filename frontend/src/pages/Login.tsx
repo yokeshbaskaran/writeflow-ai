@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import axios from "axios";
 
 const Authpage = () => {
   const { pathToHome, login } = useAppContext();
@@ -8,6 +9,8 @@ const Authpage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const API_URL = "http://127.0.0.1:8000";
+
   const handleAuth = () => {
     //dummy login
     login(email, password);
@@ -15,6 +18,22 @@ const Authpage = () => {
     setPassword("");
     console.log("Login success!");
     pathToHome();
+  };
+
+  //testing
+  const handleLogin = async () => {
+    console.log("Login page!");
+    const data = {
+      email: "rocky1@gmail.com",
+      password: "123456",
+    };
+
+    const response = await axios.post(API_URL + "/login", data);
+
+    if (response) {
+      const data = await response.data;
+      console.log("data!:", data);
+    }
   };
 
   return (
@@ -100,7 +119,7 @@ const Authpage = () => {
         </div>
 
         <button
-          onClick={pathToHome}
+          onClick={handleLogin}
           className="my-8 p-4 text-primary border-2 border-primary rounded-xs hover:bg-primary hover:text-white cursor-pointer"
         >
           Return to Home
