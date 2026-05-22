@@ -35,32 +35,37 @@ const Navbar = () => {
       linkName: "Home",
     },
     {
+      link: "/dashboard",
+      icon: <BiMessageRoundedAdd size={25} />,
+      linkName: "Dashboard",
+    },
+    {
       link: "/create",
       icon: <BiMessageRoundedAdd size={25} />,
       linkName: "Generate",
     },
-    {
-      link: "/myprofile",
-      icon: <CgProfile size={25} />,
-      linkName: "Profile",
-    },
+    // {
+    //   link: "/myprofile",
+    //   icon: <CgProfile size={25} />,
+    //   linkName: "Profile",
+    // },
     // {
     //   link: "/search",
     //   icon: <IoSearch size={25} />,
     //   linkName: "Search",
     // },
-    {
-      link: "/notifications",
-      icon: <TbBellRinging size={25} />,
-      linkName: "Notifications",
-    },
+    // {
+    //   link: "/notifications",
+    //   icon: <TbBellRinging size={25} />,
+    //   linkName: "Notifications",
+    // },
   ];
 
   const navDetails = authUser ? authenticatedNav : unauthenticatedNav;
 
   return (
     <>
-      <section className="h-14 px-3 py-5 border-b border-border flex items-center bg-bg">
+      <section className="h-12 px-3 py-5 border-b border-border flex items-center bg-bg">
         <div className="w-full flex items-center justify-between">
           {/* i) Mobile Navbar  */}
 
