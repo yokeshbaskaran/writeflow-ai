@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { BiCopy } from "react-icons/bi";
+import { MdDone } from "react-icons/md";
 const Response = () => {
+  const [textCopied, setTextCopied] = useState(false);
   return (
     <>
       {/* Response section */}
@@ -36,7 +39,7 @@ const Response = () => {
 
           <div className="mt-6 mx-5 absolute top-0 right-0">
             <button className="p-1 bg-bg text-primary border border-border rounded hover:text-white hover:bg-primary cursor-pointer">
-              <BiCopy size={23} />
+              {textCopied ? <MdDone size={23} /> : <BiCopy size={23} />}
             </button>
           </div>
         </div>
