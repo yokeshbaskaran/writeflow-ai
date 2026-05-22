@@ -1,12 +1,14 @@
 # Connect MongoDB
 from pymongo import MongoClient
+import os
 
-API_URL = "mongodb://localhost:27017"
+API_URL = os.getenv("MONGO_DB_URL")
+
 
 client = MongoClient(API_URL)
 
 # naming database name
 db = client["writeflow_db"]
 
-# users model
+# users collections
 users_collection = db["users"]
