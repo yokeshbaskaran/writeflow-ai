@@ -1,3 +1,4 @@
+import { CgProfile } from "react-icons/cg";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdLockPerson, MdOutlineClose } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
@@ -42,6 +43,11 @@ const Navbar = () => {
       link: "/create",
       icon: <RiAiGenerateText size={25} />,
       linkName: "Generate",
+    },
+    {
+      link: "/myprofile",
+      icon: <CgProfile size={25} />,
+      linkName: "Profile",
     },
     // {
     //   link: "/search",
