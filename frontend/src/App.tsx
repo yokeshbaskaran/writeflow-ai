@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/" element={<MainLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="create" element={<Create />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
           {/* Auth Route */}

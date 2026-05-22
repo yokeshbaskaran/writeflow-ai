@@ -45,7 +45,7 @@ const Navbar = () => {
       linkName: "Generate",
     },
     {
-      link: "/myprofile",
+      link: "/profile",
       icon: <CgProfile size={25} />,
       linkName: "Profile",
     },
