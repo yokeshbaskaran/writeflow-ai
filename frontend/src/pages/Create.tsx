@@ -1,5 +1,5 @@
-import Generate from "./Generate";
-import Response from "./Response";
+import Generate from "../components/Generate";
+import Response from "../components/Response";
 
 const Create = () => {
   const personName = "Yokesh";
