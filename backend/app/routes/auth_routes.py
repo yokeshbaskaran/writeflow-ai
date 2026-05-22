@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from schemas.auth_schema import SignupRequest, LoginRequest
 from utils.hash import hash_pwd, verify_pwd
 from db.database import users_collection
+from utils.jwt_handler import create_token
 
 # router creating
 router = APIRouter()
@@ -22,7 +23,9 @@ def login(data: LoginRequest):
     if not is_valid_pwsd:
         return {"message": "Invalid credential"}
 
-    return {"msg": "User logined!"}
+    token = create_token(findUser["email"])
+
+    return {"msg": "User logined!", "access_token": token}
 
 
 @router.post("/signup")
