@@ -1,9 +1,8 @@
 # main.py file
 from fastapi import FastAPI
 from routes.auth_routes import router as auth_router
-from dependencies.auth_dependency import get_current_user
+from routes.user_routes import router as user_router
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import Depends
 
 # creating app
 app = FastAPI()
@@ -23,14 +22,10 @@ app.add_middleware(
 
 
 # add/include the routes from other folders
-app.include_router(auth_router)
+app.include_router(auth_router)  # authentication
+app.include_router(user_router)  # user routes
 
 
 @app.get("/")
 def test():
     return {"message": "Hi from main.py testing!!!"}
-
-
-@app.get("/profile")
-def profile(current_user=Depends(get_current_user)):
-    return current_user
