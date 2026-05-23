@@ -10,10 +10,14 @@ import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 
 const Navbar = () => {
-  const { authUser, logout } = useAppContext();
+  const { handleUserLogout } = useAppContext();
   const [mobileNav, setMobileNav] = useState(false);
 
   const { pathname } = useLocation();
+
+  // dummy authUser
+  // const authUser = false;
+  const authUser = true;
 
   const unauthenticatedNav = [
     {
@@ -164,8 +168,8 @@ const Navbar = () => {
             {/* Logout only exist when user logined */}
             {authUser && (
               <button
-                onClick={logout}
-                className="mx-2 px-2 py-1 text-red-700 bg-bg-hover rounded cursor-pointer"
+                onClick={handleUserLogout}
+                className="mx-2 px-2 py-1 text-red-700 border border-red-900 rounded cursor-pointer"
               >
                 Logout
               </button>

@@ -12,10 +12,8 @@ export const API_URL = import.meta.env.VITE_API_URL;
 
 type AppContextType = {
   pathToHome: () => void;
-  // login: (email: string, password: string) => void;
-  // logout: () => void;
-  // authUser: AuthStateType | null;
-  // setAuthUser: (user: AuthStateType | null) => void;
+  //auth
+  handleUserLogout: () => void;
 };
 
 const AppContext = createContext({} as AppContextType);
@@ -45,9 +43,14 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     navigate("/");
   };
 
+  const handleUserLogout = () => {
+    localStorage.setItem("token", "");
+  };
+
   //context values
   const contextValue = {
     pathToHome,
+    handleUserLogout,
   };
 
   return (
