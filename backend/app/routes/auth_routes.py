@@ -1,6 +1,6 @@
 # 1. Create Signup API
 from fastapi import APIRouter, HTTPException, status
-from schemas.auth_schema import SignupRequest, LoginRequest
+from models.auth_model import SignupRequest, LoginRequest
 from utils.hash import hash_pwd, verify_pwd
 from db.database import users_collection
 from utils.jwt_handler import create_token
