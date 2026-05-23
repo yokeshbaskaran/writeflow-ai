@@ -25,7 +25,7 @@ def login(data: LoginRequest):
 
     token = create_token(findUser["email"])
 
-    return {"msg": "User logined!", "access_token": token}
+    return {"message": "User logined!", "access_token": token}
 
 
 @router.post("/signup")
