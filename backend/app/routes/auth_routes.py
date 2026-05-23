@@ -1,5 +1,5 @@
 # 1. Create Signup API
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 from schemas.auth_schema import SignupRequest, LoginRequest
 from utils.hash import hash_pwd, verify_pwd
 from db.database import users_collection
@@ -13,19 +13,35 @@ router = APIRouter()
 def login(data: LoginRequest):
     print("Login request!")
 
-    findUser = users_collection.find_one({"email": data.email})
+    try:
+        findUser = users_collection.find_one({"email": data.email})
 
-    if not findUser:
-        return {"message": "Account not found!"}
+        if not findUser:
+            # return {"message": "Account not found!"}
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Account not found!"
+            )
 
-    is_valid_pwsd = verify_pwd(data.password, findUser["password"])
+        is_valid_pwsd = verify_pwd(data.password, findUser["password"])
 
-    if not is_valid_pwsd:
-        return {"message": "Invalid credential"}
+        if not is_valid_pwsd:
+            # return {"message": "Invalid credential"}
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credential"
+            )
 
-    token = create_token(findUser["email"])
+        token = create_token(findUser["email"])
 
-    return {"message": "User logined!", "access_token": token}
+        return {"message": "User logined!", "access_token": token}
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error",
+        )
 
 
 @router.post("/signup")
