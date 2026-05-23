@@ -131,7 +131,10 @@ const Authpage = () => {
               ) : (
                 <>
                   <p>Don't have an account?</p>
+
+                  {/* Disabled for only Signup page  */}
                   <button
+                    disabled
                     onClick={() => setLogined(!logined)}
                     className="text-primary hover:underline cursor-pointer"
                   >
