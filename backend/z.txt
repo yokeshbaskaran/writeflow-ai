@@ -80,9 +80,6 @@ AI Prompt:
     return content
 
 
-
-
-
 topic = "write a blog post about benefits of using ai in daily life"
 tone = "professional"
 length = "medium"
@@ -102,7 +99,7 @@ Tone:
 Length:
 {length}
 
-Requirements:
+Requirements for content:
 - Use a compelling title
 - Add introduction
 - Add 3-5 headings
