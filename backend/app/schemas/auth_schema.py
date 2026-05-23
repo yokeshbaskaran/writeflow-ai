@@ -1,13 +1,15 @@
-# Create User Schema
+# Create Schema
 from pydantic import BaseModel, EmailStr
 
 
+# 1. Signup Schema
 class SignupRequest(BaseModel):
     name: str
     email: EmailStr
     password: str
 
 
+# 2. Login Schema
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str

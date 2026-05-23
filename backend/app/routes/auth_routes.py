@@ -16,7 +16,7 @@ def login(data: LoginRequest):
     findUser = users_collection.find_one({"email": data.email})
 
     if not findUser:
-        return {"message": "Invalid credentials"}
+        return {"message": "Account not found!"}
 
     is_valid_pwsd = verify_pwd(data.password, findUser["password"])
 
