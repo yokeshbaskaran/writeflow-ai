@@ -1,38 +1,63 @@
 import { useState } from "react";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext, API_URL } from "../context/AppContext";
+import toast from "react-hot-toast";
 import axios from "axios";
 
+type UserLoginType = {
+  email: string;
+  password: string;
+};
+
 const Authpage = () => {
-  const { pathToHome, login } = useAppContext();
+  const { pathToHome } = useAppContext();
   const [logined, setLogined] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const API_URL = "http://127.0.0.1:8000";
-
-  const handleAuth = () => {
-    //dummy login
-    login(email, password);
-    setEmail("");
-    setPassword("");
-    console.log("Login success!");
-    pathToHome();
-  };
-
-  //testing
-  const handleLogin = async () => {
+  // User Login
+  const handleUserLogin = async () => {
     console.log("Login page!");
-    const data = {
-      email: "rocky1@gmail.com",
-      password: "123456",
-    };
+    const userData: UserLoginType = { email, password };
 
-    const response = await axios.post(API_URL + "/login", data);
+    try {
+      if (!email.trim()) {
+        toast.error("Email is required");
+        return;
+      }
 
-    if (response) {
-      const data = await response.data;
-      console.log("data!:", data);
+      if (!password.trim()) {
+        toast.error("Password is required");
+        return;
+      }
+
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        toast.error("Invalid email");
+        return;
+      }
+
+      const response = await axios.post(API_URL + "/login", userData);
+      const dbData = response.data;
+      console.log("login-data!:", response, dbData);
+
+      toast.success(dbData.message);
+      pathToHome();
+      setEmail("");
+      setPassword("");
+      // sets token in localstorage
+      localStorage.setItem("token", dbData.access_token);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const detail = error.response?.data?.detail;
+
+        toast.error(
+          Array.isArray(detail)
+            ? detail[0].msg
+            : (detail ?? "Something went wrong"),
+        );
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   };
 
@@ -81,7 +106,7 @@ const Authpage = () => {
               </div>
 
               <button
-                onClick={handleAuth}
+                onClick={handleUserLogin}
                 className="w-full h-10 mt-3 bg-primary hover:bg-primary-hover rounded text-white cursor-pointer"
               >
                 Submit
@@ -119,7 +144,7 @@ const Authpage = () => {
         </div>
 
         <button
-          onClick={handleLogin}
+          onClick={pathToHome}
           className="my-8 p-4 text-primary border-2 border-primary rounded-xs hover:bg-primary hover:text-white cursor-pointer"
         >
           Return to Home
