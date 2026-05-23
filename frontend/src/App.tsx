@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
 import Profile from "./pages/Profile";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -22,6 +23,9 @@ const App = () => {
           {/* Auth Route */}
           <Route path="/auth" element={<Login />} />
         </Routes>
+
+        {/* Popup message  */}
+        <Toaster position="top-center" reverseOrder={false} />
       </div>
     </>
   );
