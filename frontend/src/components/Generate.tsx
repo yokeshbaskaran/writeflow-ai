@@ -1,8 +1,99 @@
+// import { useState } from "react";
+import { API_URL, useAppContext } from "../context/AppContext";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+// type GenerateContentType = {
+//   content_type: string;
+//   style: string;
+//   topic: string;
+//   tone: string;
+//   length: number;
+//   instructions: string;
+// };
+
 const Generate = () => {
+  // const [type, setType] = useState("");
+  // const [style, setStyle] = useState("");
+  // const [topic, setTopic] = useState("");
+  // const [tone, setTone] = useState("");
+  // const [instructions, setInstructions] = useState("");
+
+  const { setAiResponse } = useAppContext();
+
   const handleSubmit = (
     e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>,
   ) => {
     e.preventDefault();
+  };
+
+  // generate a AI Response
+  const generateResponse = async () => {
+    console.log("Generate content page!");
+    const data = {
+      content_type: "linkedin-post",
+      topic: "Learning FastAPI",
+      tone: "professional",
+      length: "medium",
+      style: "Tutorial",
+      instructions: "return the JSON format as content response",
+    };
+
+    // const userContent: GenerateContentType = {
+    //   content_type: type,
+    //   style,
+    //   topic,
+    //   tone,
+    //   length,
+    //   instructions,
+    // };
+
+    try {
+      // if (!type.trim()) {
+      //   toast.error("Email is required");
+      //   return;
+      // }
+
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(API_URL + "/generate", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+
+      const dbData = response.data;
+      const cleanedContent = dbData.content
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+      // console.log("generate-data!:", response, dbData);
+      const parsedResponse = JSON.parse(cleanedContent);
+      setAiResponse(parsedResponse);
+      console.log("parsedResponse", parsedResponse);
+
+      toast.success(dbData.message);
+
+      // sets the useState
+      // setType("");
+      // setStyle("");
+      // setTopic("");
+      // setTone("");
+      // setInstructions("");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const detail = error.response?.data?.detail;
+
+        toast.error(
+          Array.isArray(detail)
+            ? detail[0].msg
+            : (detail ?? "Something went wrong"),
+        );
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   };
   return (
     <>
@@ -24,7 +115,7 @@ const Generate = () => {
                 Content Type
               </label>
               <select
-                className="mt-2 p-2 border border-border rounded focus:outline-primary"
+                className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="type"
                 name="type"
               >
@@ -42,7 +133,7 @@ const Generate = () => {
                 Style
               </label>
               <select
-                className="mt-2 p-2 border border-border rounded focus:outline-primary"
+                className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="style"
                 name="style"
               >
@@ -62,12 +153,11 @@ const Generate = () => {
 
             <div className="relative">
               <textarea
-                className="w-full h-28 mt-2 p-2 pb-5 border focus:border-border rounded outline-primary"
-                // overflow-y-scroll scrollbar-none"
+                className="w-full h-28 mt-2 p-2 pb-5 border focus:border-border rounded outline-primary resize-none scrollbar-none"
                 id="topic"
                 placeholder=" Write a blog post about benefits of using Al in daily life"
               ></textarea>
-              <span className="absolute bottom-2 right-2 text-xs text-text-muted">
+              <span className="px-1 absolute bottom-2 right-2 text-xs border border-border rounded bg-bg-hover text-text-muted">
                 words count: 58/500
               </span>
             </div>
@@ -80,7 +170,7 @@ const Generate = () => {
                 Tone
               </label>
               <select
-                className="mt-2 p-2 border border-border rounded focus:outline-primary"
+                className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="tone"
                 name="tone"
               >
@@ -96,7 +186,7 @@ const Generate = () => {
                 Length
               </label>
               <select
-                className="mt-2 p-2 border border-border rounded focus:outline-primary"
+                className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="length"
                 name="length"
               >
@@ -115,17 +205,17 @@ const Generate = () => {
 
             <div className="relative">
               <textarea
-                className="w-full h-18 mt-2 p-2 pb-5 border border-border-strong focus:outline-primary"
+                className="w-full h-18 mt-2 p-2 pb-5 border border-border-strong focus:outline-primary resize-none scrollbar-none"
                 id="instructions"
                 placeholder="E.g. Include examples, statistics, call to action ... 0/300"
               ></textarea>
-              <span className="absolute bottom-2 right-2 text-xs text-text-muted">
-                words count: 58/500
-              </span>
             </div>
           </div>
 
-          <button className="w-full p-2 text-base text-white bg-primary rounded hover:bg-primary-hover cursor-pointer">
+          <button
+            onClick={generateResponse}
+            className="w-full p-2 text-base text-white bg-primary rounded hover:bg-primary-hover cursor-pointer"
+          >
             Generate Response
           </button>
         </form>
