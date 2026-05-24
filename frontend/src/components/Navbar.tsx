@@ -10,14 +10,14 @@ import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 
 const Navbar = () => {
-  const { handleUserLogout } = useAppContext();
+  const { handleUserLogout, authUser } = useAppContext();
   const [mobileNav, setMobileNav] = useState(false);
 
   const { pathname } = useLocation();
 
   // dummy authUser
   // const authUser = false;
-  const authUser = true;
+  // const authUser = true;
 
   const unauthenticatedNav = [
     {

@@ -9,7 +9,7 @@ type UserLoginType = {
 };
 
 const Authpage = () => {
-  const { pathToHome } = useAppContext();
+  const { pathToHome, setAuthUser } = useAppContext();
   const [logined, setLogined] = useState(false);
 
   const [email, setEmail] = useState<string>("");
@@ -45,6 +45,7 @@ const Authpage = () => {
       setEmail("");
       setPassword("");
       // sets token in localstorage
+      setAuthUser(dbData);
       localStorage.setItem("token", dbData.access_token);
     } catch (error) {
       if (axios.isAxiosError(error)) {

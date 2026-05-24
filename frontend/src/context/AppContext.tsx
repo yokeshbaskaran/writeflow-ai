@@ -14,8 +14,9 @@ type AIResponseType = {
   conclusion: string;
 };
 
-export const API_URL = import.meta.env.VITE_API_URL;
-// console.log("API_URL", API_URL);
+type AuthUserType = {
+  username: string;
+};
 
 type AppContextType = {
   pathToHome: () => void;
@@ -23,7 +24,13 @@ type AppContextType = {
   handleUserLogout: () => void;
   aiResponse: AIResponseType | null;
   setAiResponse: React.Dispatch<React.SetStateAction<AIResponseType | null>>;
+
+  authUser: AuthUserType | null;
+  setAuthUser: React.Dispatch<React.SetStateAction<AuthUserType | null>>;
 };
+
+export const API_URL = import.meta.env.VITE_API_URL;
+// console.log("API_URL", API_URL);
 
 const AppContext = createContext({} as AppContextType);
 
@@ -40,6 +47,7 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   // dummy authentication
   const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
   console.log("aiResponse::", aiResponse);
+  const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
 
   //when page reloads
   useEffect(() => {
@@ -56,6 +64,7 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
 
   const handleUserLogout = () => {
     localStorage.setItem("token", "");
+    setAuthUser(null);
   };
 
   //context values
@@ -64,6 +73,9 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     handleUserLogout,
     aiResponse,
     setAiResponse,
+
+    authUser,
+    setAuthUser,
   };
 
   return (
