@@ -45,6 +45,7 @@ const Generate = () => {
   const [tone, setTone] = useState("");
   const [length, setLength] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [displayText, setDisplayText] = useState(false);
 
   // Count words
   const topicWordCount = topic.trim() ? topic.trim().split(/\s+/).length : 0;
@@ -64,6 +65,7 @@ const Generate = () => {
     }
 
     console.log("Generate content page!");
+    setDisplayText(true);
 
     const data: GenerateContentType = {
       content_type: type,
@@ -119,6 +121,8 @@ const Generate = () => {
       } else {
         toast.error("Something went wrong");
       }
+    } finally {
+      setDisplayText(false);
     }
   };
 
@@ -190,7 +194,7 @@ const Generate = () => {
 
             <div className="relative">
               <textarea
-                className="w-full h-28 mt-2 p-2 pb-5 border focus:border-border rounded outline-primary resize-none scrollbar-none"
+                className="w-full h-28 mt-2 p-2 pb-5 border border-border-strong rounded outline-primary resize-none scrollbar-none"
                 id="topic"
                 placeholder=" Write a blog post about benefits of using Al in daily life"
                 value={topic}
@@ -205,7 +209,7 @@ const Generate = () => {
                 // }}
               ></textarea>
               <span className="px-1 absolute bottom-2 right-1 text-xs border border-border rounded bg-bg-hover text-text-muted">
-                words count: {topicWordCount}/500
+                {topicWordCount > 0 && `word count: ${topicWordCount}`}
               </span>
             </div>
           </div>
@@ -273,10 +277,11 @@ const Generate = () => {
           </div>
 
           <button
+            disabled={displayText}
             onClick={generateResponse}
-            className="w-full p-2 text-base text-white bg-primary rounded hover:bg-primary-hover cursor-pointer"
+            className={`w-full p-2 text-base text-white bg-primary rounded hover:bg-primary-hover cursor-pointer ${displayText && "opacity-85"}`}
           >
-            Generate Response
+            {displayText ? "Generating..." : "  Generate Response"}
           </button>
         </form>
       </section>
