@@ -1,24 +1,53 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { API_URL, useAppContext } from "../context/AppContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-// type GenerateContentType = {
-//   content_type: string;
-//   style: string;
-//   topic: string;
-//   tone: string;
-//   length: number;
-//   instructions: string;
-// };
+type GenerateContentType = {
+  content_type: string;
+  style: string;
+  topic: string;
+  tone: string;
+  length: string;
+  instructions: string;
+};
+
+// array of options
+const typeOptions = [
+  "LinkedIn Post",
+  "Blog Post",
+  "Create a Tweet(X) post",
+  "Instagram Captions",
+  "SEO titles",
+  "Resume Bullet Points",
+];
+
+const styleOptions = [
+  "Tutorial",
+  "Informative",
+  "Step-by-Step guide",
+  "Case Study",
+];
+
+const toneOptions = ["Casual", "Technical", "Professional", "Educational"];
+
+const lengthOptions = [
+  "Short (100-200 words)",
+  "Medium (300-500 words)",
+  "Long (600-1000 words)",
+  "Detailed (1000-1500 words)",
+];
 
 const Generate = () => {
-  // const [type, setType] = useState("");
-  // const [style, setStyle] = useState("");
-  // const [topic, setTopic] = useState("");
-  // const [tone, setTone] = useState("");
-  // const [instructions, setInstructions] = useState("");
+  const [type, setType] = useState("");
+  const [style, setStyle] = useState("");
+  const [topic, setTopic] = useState("");
+  const [tone, setTone] = useState("");
+  const [length, setLength] = useState("");
+  const [instructions, setInstructions] = useState("");
 
+  // Count words
+  const topicWordCount = topic.trim() ? topic.trim().split(/\s+/).length : 0;
   const { setAiResponse } = useAppContext();
 
   const handleSubmit = (
@@ -29,24 +58,21 @@ const Generate = () => {
 
   // generate a AI Response
   const generateResponse = async () => {
-    console.log("Generate content page!");
-    const data = {
-      content_type: "linkedin-post",
-      topic: "Learning FastAPI",
-      tone: "professional",
-      length: "medium",
-      style: "Tutorial",
-      instructions: "return the JSON format as content response",
-    };
+    if (!type.trim() || !topic.trim() || !tone.trim() || !length.trim()) {
+      toast.error("Enter all details to generate!");
+      return;
+    }
 
-    // const userContent: GenerateContentType = {
-    //   content_type: type,
-    //   style,
-    //   topic,
-    //   tone,
-    //   length,
-    //   instructions,
-    // };
+    console.log("Generate content page!");
+
+    const data: GenerateContentType = {
+      content_type: type,
+      style,
+      topic,
+      tone,
+      length,
+      instructions,
+    };
 
     try {
       // if (!type.trim()) {
@@ -76,11 +102,11 @@ const Generate = () => {
       toast.success(dbData.message);
 
       // sets the useState
-      // setType("");
-      // setStyle("");
-      // setTopic("");
-      // setTone("");
-      // setInstructions("");
+      setType("");
+      setStyle("");
+      setTopic("");
+      setTone("");
+      setInstructions("");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const detail = error.response?.data?.detail;
@@ -95,6 +121,7 @@ const Generate = () => {
       }
     }
   };
+
   return (
     <>
       <section className="w-full py-2 px-2 flex flex-col border border-border rounded">
@@ -110,6 +137,8 @@ const Generate = () => {
           {/* Type and Style  */}
 
           <section className="w-full px-1 pt-2 flex justify-center items-start gap-2 text-sm">
+            {/* Content Type  */}
+
             <div className="w-1/2 flex flex-col">
               <label htmlFor="type" className="text-text font-semibold">
                 Content Type
@@ -118,29 +147,37 @@ const Generate = () => {
                 className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="type"
                 name="type"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
               >
-                <option>LinkedIn Post</option>
-                <option>Blog Post</option>
-                <option>Create a Tweet X post</option>
-                <option>Instagram Caption</option>
-                <option>SEO titles</option>
-                <option>Resume Bullet Points</option>
+                <option value="">choose type</option>
+                {typeOptions.map((item, idx) => (
+                  <option key={idx} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </div>
 
+            {/* Style  */}
             <div className="w-1/2 flex flex-col">
               <label htmlFor="style" className="font-semibold">
                 Style
+                <span className="pl-1 text-text-muted">(Optional)</span>
               </label>
               <select
                 className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="style"
                 name="style"
+                value={style}
+                onChange={(e) => setStyle(e.target.value)}
               >
-                <option>Informative</option>
-                <option>Tutorial</option>
-                <option>Step-by-Step guide</option>
-                <option>Case Study</option>
+                <option value="">choose style</option>
+                {styleOptions.map((item, idx) => (
+                  <option key={idx} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </div>
           </section>
@@ -156,15 +193,26 @@ const Generate = () => {
                 className="w-full h-28 mt-2 p-2 pb-5 border focus:border-border rounded outline-primary resize-none scrollbar-none"
                 id="topic"
                 placeholder=" Write a blog post about benefits of using Al in daily life"
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                // onChange={(e) => {
+                //   const text = e.target.value;
+                //   const words = text.trim().split(/\s+/);
+
+                //   if (words.length <= 500 || text === "") {
+                //     setTopic(text);
+                //   }
+                // }}
               ></textarea>
-              <span className="px-1 absolute bottom-2 right-2 text-xs border border-border rounded bg-bg-hover text-text-muted">
-                words count: 58/500
+              <span className="px-1 absolute bottom-2 right-1 text-xs border border-border rounded bg-bg-hover text-text-muted">
+                words count: {topicWordCount}/500
               </span>
             </div>
           </div>
 
           {/* Tone and Length */}
           <section className="w-full flex items-start gap-2 text-sm">
+            {/* Tone  */}
             <div className="w-1/2 flex flex-col">
               <label htmlFor="tone" className="font-semibold">
                 Tone
@@ -173,14 +221,19 @@ const Generate = () => {
                 className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="tone"
                 name="tone"
+                value={tone}
+                onChange={(e) => setTone(e.target.value)}
               >
-                <option>Casual</option>
-                <option>Technical</option>
-                <option>Professional</option>
-                <option>Educational</option>
+                <option value="">choose tone</option>
+                {toneOptions.map((item, idx) => (
+                  <option key={idx} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </div>
 
+            {/*   Length */}
             <div className="w-1/2 flex flex-col">
               <label htmlFor="length" className="font-semibold">
                 Length
@@ -189,25 +242,32 @@ const Generate = () => {
                 className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
                 id="length"
                 name="length"
+                value={length}
+                onChange={(e) => setLength(e.target.value)}
               >
-                <option>Short (100-200 words)</option>
-                <option> semibold (300-500 words)</option>
-                <option>Long (600-1000 words)</option>
-                <option>Detailed (1000-1500 words)</option>
+                <option value="">choose length</option>
+                {lengthOptions.map((item, idx) => (
+                  <option key={idx} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
             </div>
           </section>
 
           <div className="w-full flex flex-col text-sm">
             <label htmlFor="instructions" className="font-semibold">
-              Additional Instructions (Optional)
+              Additional Instructions{" "}
+              <span className="pl-1 text-text-muted">(Optional)</span>
             </label>
 
             <div className="relative">
               <textarea
                 className="w-full h-18 mt-2 p-2 pb-5 border border-border-strong focus:outline-primary resize-none scrollbar-none"
                 id="instructions"
-                placeholder="E.g. Include examples, statistics, call to action ... 0/300"
+                placeholder="E.g. Include examples, statistics, call to action"
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
               ></textarea>
             </div>
           </div>
