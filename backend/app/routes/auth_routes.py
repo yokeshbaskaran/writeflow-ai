@@ -32,7 +32,15 @@ def login(data: LoginRequest):
 
         token = create_token(findUser["email"])
 
-        return {"message": "User logined!", "access_token": token}
+        # creating username
+        useremail = findUser["email"]
+        personName = useremail.split("@")[0]
+
+        return {
+            "message": "User logined!",
+            "username": personName,
+            "access_token": token,
+        }
     except HTTPException:
         raise
 
