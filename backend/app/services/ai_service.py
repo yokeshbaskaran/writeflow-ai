@@ -19,14 +19,19 @@ Topic:
 Tone:
 {data.tone}
 
-Requirements for content:
-- Use a compelling title
-- Add introduction
-- Add 3-5 headings
-- Use paragraphs
-- Include examples
-- Add conclusion
-- Return clean markdown
+Requirements:
+- Create a compelling title
+- Write an introduction paragraph
+- Create 3 to 5 sections
+- Each section must contain:
+  - a plain text heading (NO markdown syntax like #, ##, ###)
+  - paragraph content
+- Include examples where relevant
+- Add a conclusion
+- Do NOT use markdown formatting
+- Do NOT include headings like ### Heading
+- Do NOT return formatted text
+- Return ONLY valid JSON
 
 Additional Instructions:
 {data.instructions}
@@ -36,15 +41,15 @@ Return ONLY valid JSON.
 Format:
 
 {{
-  "title": "",
-  "introduction": "",
+  "title": "string",
+  "introduction": "string",
   "sections": [
     {{
-      "heading": "",
-      "content": ""
+      "heading": "plain text heading only",
+      "content": "paragraph content"
     }}
   ],
-  "conclusion": ""
+  "conclusion": "string"
 }}
 """
 
