@@ -14,7 +14,7 @@ type AIResponseType = {
   conclusion: string;
 };
 
-type AuthUserType = {
+export type AuthUserType = {
   username: string;
 };
 
@@ -44,7 +44,13 @@ type AppContextProviderType = {
 };
 
 export const AppContextProvider = ({ children }: AppContextProviderType) => {
-  // dummy authentication
+  //  setting light-dark mode
+  const [dark, setDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+
+    return savedTheme === "dark";
+  });
+  // Authentication
   const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
   console.log("aiResponse::", aiResponse);
   const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
@@ -70,12 +76,11 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   //context values
   const contextValue = {
     pathToHome,
+    authUser,
+    setAuthUser,
     handleUserLogout,
     aiResponse,
     setAiResponse,
-
-    authUser,
-    setAuthUser,
   };
 
   return (
