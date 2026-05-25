@@ -9,3 +9,10 @@ class GenerateContentRequest(BaseModel):
     tone: str
     length: str
     instructions: str | None = None
+
+
+class SavedResponseRequest(BaseModel):
+    title: str
+    introduction: str
+    sections: list[dict]
+    conclusion: str
