@@ -53,8 +53,15 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   //  setting light-dark mode
   const [dark, setDark] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
-
     return savedTheme === "dark";
+  });
+
+  // Authentication
+  const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
+  // console.log("aiResponse::", aiResponse);
+  const [authUser, setAuthUser] = useState<AuthUserType | null>(() => {
+    const storedUser = localStorage.getItem("authUser");
+    return storedUser ? JSON.parse(storedUser) : null;
   });
 
   useEffect(() => {
@@ -67,18 +74,6 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     }
   }, [dark]);
 
-  // Authentication
-  const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
-  // console.log("aiResponse::", aiResponse);
-  const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
-
-  //when page reloads
-  useEffect(() => {
-    // const stored = localStorage.getItem("userdata");
-    // if (!stored) return;
-    // setAuthUser(JSON.parse(stored));
-  }, []);
-
   // Redirects to Homepage
   const navigate = useNavigate();
   const pathToHome = () => {
@@ -86,7 +81,8 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   };
 
   const handleUserLogout = () => {
-    localStorage.setItem("token", "");
+    localStorage.removeItem("token");
+    localStorage.removeItem("authUser");
     setAuthUser(null);
   };
 
