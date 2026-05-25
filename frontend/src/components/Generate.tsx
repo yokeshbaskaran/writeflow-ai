@@ -59,28 +59,23 @@ const Generate = () => {
 
   // generate a AI Response
   const generateResponse = async () => {
-    if (!type.trim() || !topic.trim() || !tone.trim() || !length.trim()) {
-      toast.error("Enter all details to generate!");
-      return;
-    }
-
     console.log("Generate content page!");
     setDisplayText(true);
 
-    const data: GenerateContentType = {
-      content_type: type,
-      style,
-      topic,
-      tone,
-      length,
-      instructions,
-    };
-
     try {
-      // if (!type.trim()) {
-      //   toast.error("Email is required");
-      //   return;
-      // }
+      if (!type.trim() || !topic.trim() || !tone.trim() || !length.trim()) {
+        toast.error("Enter all details to generate!");
+        return;
+      }
+
+      const data: GenerateContentType = {
+        content_type: type,
+        style,
+        topic,
+        tone,
+        length,
+        instructions,
+      };
 
       const token = localStorage.getItem("token");
 

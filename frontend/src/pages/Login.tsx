@@ -77,7 +77,7 @@ const Authpage = () => {
           </p>
         </div>
 
-        <div className="md:w-110 mt-1 px-12 pt-5 pb-5 bg-bg-hover border border-border rounded shado">
+        <div className="md:w-110 mt-1 px-12 pt-5 pb-5 bg-bg-hover border border-border-strong rounded shado">
           <div className="w-full flex flex-col">
             {/* Email Address: */}
 
@@ -149,7 +149,7 @@ const Authpage = () => {
 
         <button
           onClick={pathToHome}
-          className="my-8 p-4 text-primary border-2 border-primary rounded-xs hover:bg-primary hover:text-white cursor-pointer"
+          className="my-8 p-4 text-primary border-2 border-primary rounded hover:bg-primary hover:text-white cursor-pointer"
         >
           Return to Home
         </button>
