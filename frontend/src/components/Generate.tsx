@@ -94,7 +94,7 @@ const Generate = () => {
       const parsedResponse = JSON.parse(cleanedContent);
       setAiResponse(parsedResponse);
       // console.log("parsedResponse", parsedResponse);
-      toast.success(dbData.message);
+      toast.success("Your Response generated");
 
       // sets the useState
       setType("");
