@@ -2,17 +2,17 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 //types
-type ContentSectionType = {
+export type ContentSectionType = {
   heading: string;
   content: string;
 };
 
 export type AIResponseType = {
   title: string;
-  content_type: string;
   introduction: string;
   sections: ContentSectionType[];
   conclusion: string;
+  content_type: string;
 };
 
 export type AuthUserType = {
