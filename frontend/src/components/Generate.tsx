@@ -83,7 +83,6 @@ const Generate = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        withCredentials: true,
       });
 
       const dbData = response.data;
@@ -91,7 +90,7 @@ const Generate = () => {
         .replace(/```json/g, "")
         .replace(/```/g, "")
         .trim();
-      // console.log("generate-data!:", response, dbData);
+      // console.log("generate-data!:", response);
       const parsedResponse = JSON.parse(cleanedContent);
       setAiResponse(parsedResponse);
       // console.log("parsedResponse", parsedResponse);
@@ -102,6 +101,7 @@ const Generate = () => {
       setStyle("");
       setTopic("");
       setTone("");
+      setLength("");
       setInstructions("");
     } catch (error) {
       if (axios.isAxiosError(error)) {
