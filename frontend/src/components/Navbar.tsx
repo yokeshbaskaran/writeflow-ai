@@ -69,7 +69,7 @@ const Navbar = () => {
 
   return (
     <>
-      <section className="h-12 px-3 py-5 border-b border-border flex items-center bg-bg">
+      <section className="h-12 px-3 py-7 border-b border-border flex items-center bg-bg">
         <div className="w-full flex items-center justify-between">
           {/* i) Mobile Navbar  */}
 
