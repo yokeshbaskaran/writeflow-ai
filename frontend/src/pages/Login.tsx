@@ -45,7 +45,7 @@ const Authpage = () => {
       setEmail("");
       setPassword("");
       // sets token in localstorage
-      setAuthUser(dbData);
+      setAuthUser(dbData.user);
       localStorage.setItem("token", dbData.access_token);
     } catch (error) {
       if (axios.isAxiosError(error)) {

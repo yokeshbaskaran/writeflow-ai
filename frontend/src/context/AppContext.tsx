@@ -15,7 +15,10 @@ type AIResponseType = {
 };
 
 export type AuthUserType = {
-  username: string;
+  user: {
+    username: string;
+    email: string;
+  };
 };
 
 type AppContextType = {
@@ -53,9 +56,10 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
 
     return savedTheme === "dark";
   });
+
   // Authentication
   const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
-  console.log("aiResponse::", aiResponse);
+  // console.log("aiResponse::", aiResponse);
   const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
 
   //when page reloads

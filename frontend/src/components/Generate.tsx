@@ -94,8 +94,7 @@ const Generate = () => {
       // console.log("generate-data!:", response, dbData);
       const parsedResponse = JSON.parse(cleanedContent);
       setAiResponse(parsedResponse);
-      console.log("parsedResponse", parsedResponse);
-
+      // console.log("parsedResponse", parsedResponse);
       toast.success(dbData.message);
 
       // sets the useState
