@@ -154,12 +154,11 @@ ${aiResponse?.conclusion ?? ""}
               <button
                 disabled={saveStatus === "saving" || saveStatus === "saved"}
                 onClick={() => saveResponse(aiResponse)}
-                className={`p-2 text-sm text-white bg-primary rounded
-  ${
-    saveStatus === "saving" || saveStatus === "saved"
-      ? "opacity-65 cursor-not-allowed"
-      : "hover:bg-primary-hover cursor-pointer"
-  }`}
+                className={`p-2 text-sm text-white bg-primary rounded ${
+                  saveStatus === "saving" || saveStatus === "saved"
+                    ? "opacity-65 cursor-not-allowed"
+                    : "hover:bg-primary-hover cursor-pointer"
+                }`}
               >
                 {saveStatus === "saving"
                   ? "Saving..."
