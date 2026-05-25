@@ -57,6 +57,16 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     return savedTheme === "dark";
   });
 
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [dark]);
+
   // Authentication
   const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
   // console.log("aiResponse::", aiResponse);
