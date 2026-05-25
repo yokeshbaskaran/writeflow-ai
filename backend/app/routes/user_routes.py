@@ -51,3 +51,20 @@ def save_content(
     result = contents_collection.insert_one(content_document)
 
     return {"success": True, "id": str(result.inserted_id)}
+
+
+@router.get("/responses")
+def get_all_responses(current_user: dict = Depends(get_current_user)):
+
+    users_email = current_user["sub"]
+    result = contents_collection.find({"user_email": users_email})
+
+    print("result:", result)
+
+    responses = []
+
+    for item in result:
+        item["_id"] = str(item["_id"])
+        responses.append(item)
+
+    return responses

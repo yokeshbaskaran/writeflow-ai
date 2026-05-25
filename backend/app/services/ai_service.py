@@ -41,7 +41,7 @@ Return ONLY valid JSON.
 Format:
 
 {{
-  "content_type": "string",   //set user entered content_type
+  "content_type": "string",   //set excatly content_type("data.content_type") from user entered 
   "title": "string",
   "introduction": "string",
   "sections": [
