@@ -27,6 +27,9 @@ type AppContextType = {
 
   authUser: AuthUserType | null;
   setAuthUser: React.Dispatch<React.SetStateAction<AuthUserType | null>>;
+
+  dark: boolean;
+  setDark: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const API_URL = import.meta.env.VITE_API_URL;
@@ -76,6 +79,9 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   //context values
   const contextValue = {
     pathToHome,
+    dark,
+    setDark,
+
     authUser,
     setAuthUser,
     handleUserLogout,

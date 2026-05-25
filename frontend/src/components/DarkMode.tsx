@@ -1,19 +1,15 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
+import { useAppContext } from "../context/AppContext";
 
 const DarkMode = () => {
-  const [dark, setDark] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-
-    return savedTheme === "dark";
-  });
+  const { dark, setDark } = useAppContext();
 
   useEffect(() => {
     if (dark) {
       document.documentElement.classList.add("dark");
-
       localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
