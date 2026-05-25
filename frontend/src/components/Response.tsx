@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { BiCopy } from "react-icons/bi";
 import { MdDone } from "react-icons/md";
-import { useAppContext } from "../context/AppContext";
+import {
+  type AIResponseType,
+  API_URL,
+  useAppContext,
+} from "../context/AppContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Response = () => {
   const [textCopied, setTextCopied] = useState(false);
+  const [savedText, setSavedText] = useState(false);
   const { aiResponse } = useAppContext();
 
   const formattedText = `
@@ -21,6 +28,7 @@ ${
 ${aiResponse?.conclusion ?? ""}
 `;
 
+  // copying the response
   const handleCopiedText = async () => {
     await navigator.clipboard.writeText(formattedText);
 
@@ -28,6 +36,42 @@ ${aiResponse?.conclusion ?? ""}
     setTimeout(() => {
       setTextCopied(false);
     }, 3000);
+  };
+
+  const saveResponse = async (generatedContent: AIResponseType) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const payload = {
+        title: generatedContent.title,
+        introduction: generatedContent.introduction,
+        sections: generatedContent.sections,
+        conclusion: generatedContent.conclusion,
+      };
+
+      const response = await axios.post(API_URL + "/save", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      toast.success("Content saved!");
+      console.log(response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const detail = error.response?.data?.detail;
+
+        toast.error(
+          Array.isArray(detail)
+            ? detail[0].msg
+            : (detail ?? "Something went wrong"),
+        );
+      } else {
+        toast.error("Something went wrong");
+      }
+    } finally {
+      setSavedText(true);
+    }
   };
 
   return (
@@ -43,7 +87,7 @@ ${aiResponse?.conclusion ?? ""}
         {aiResponse && (
           <div>
             <div className="relative">
-              <article className="flex-1 h-100 mt-4 px-3 py-5 text-sm text-justify border border-border-strong rounded md:max-h-100 overflow-y-auto scrollbar-thin">
+              <article className="flex-1 h-100 mt-4 px-3 py-5 text-sm text-justify border border-border-strong rounded md:max-h-100 overflow-y-auto scrollbar-none">
                 <h1 className="text-2xl font-bold mb-4">{aiResponse?.title}</h1>
 
                 <p className="mb-5 indent-6">{aiResponse?.introduction}</p>
@@ -85,10 +129,18 @@ ${aiResponse?.conclusion ?? ""}
               </div>
             </div>
 
-            <div className="text-right">
+            <div className="p-2 flex justify-between items-center">
               <span className="text-xs text-text-muted">
                 {formattedText.split(" ").length} words
               </span>
+
+              <button
+                disabled={savedText}
+                onClick={() => saveResponse(aiResponse)}
+                className={`p-2 text-sm text-white bg-primary rounded cursor-pointer ${savedText ? "opacity-65" : "hover:bg-primary-hover"}`}
+              >
+                {savedText ? "Saved" : "Save to collection"}
+              </button>
             </div>
           </div>
         )}
