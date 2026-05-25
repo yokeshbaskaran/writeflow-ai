@@ -13,6 +13,7 @@ class GenerateContentRequest(BaseModel):
 
 class SavedResponseRequest(BaseModel):
     title: str
+    content_type: str
     introduction: str
     sections: list[dict]
     conclusion: str

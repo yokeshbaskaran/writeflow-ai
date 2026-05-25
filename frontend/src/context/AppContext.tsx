@@ -9,6 +9,7 @@ type ContentSectionType = {
 
 export type AIResponseType = {
   title: string;
+  content_type: string;
   introduction: string;
   sections: ContentSectionType[];
   conclusion: string;

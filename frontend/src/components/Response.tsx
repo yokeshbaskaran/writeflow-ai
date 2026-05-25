@@ -11,7 +11,9 @@ import toast from "react-hot-toast";
 
 const Response = () => {
   const [textCopied, setTextCopied] = useState(false);
-  const [savedText, setSavedText] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">(
+    "idle",
+  );
   const { aiResponse } = useAppContext();
 
   const formattedText = `
@@ -39,15 +41,27 @@ ${aiResponse?.conclusion ?? ""}
   };
 
   const saveResponse = async (generatedContent: AIResponseType) => {
-    try {
-      const token = localStorage.getItem("token");
+    // console.log("generatedContent:", generatedContent);
 
+    try {
+      setSaveStatus("saving");
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Please login first");
+        setSaveStatus("idle");
+        return;
+      }
+
+      // response data
       const payload = {
         title: generatedContent.title,
+        content_type: generatedContent.content_type,
         introduction: generatedContent.introduction,
         sections: generatedContent.sections,
         conclusion: generatedContent.conclusion,
       };
+      // console.log("save to db response:", payload);
 
       const response = await axios.post(API_URL + "/save", payload, {
         headers: {
@@ -56,21 +70,24 @@ ${aiResponse?.conclusion ?? ""}
       });
 
       toast.success("Content saved!");
+      setSaveStatus("saved");
       console.log(response.data);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const detail = error.response?.data?.detail;
+      setSaveStatus("idle");
 
-        toast.error(
-          Array.isArray(detail)
-            ? detail[0].msg
-            : (detail ?? "Something went wrong"),
-        );
-      } else {
-        toast.error("Something went wrong");
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+
+        if (status === 401) {
+          toast.error("Unauthorized");
+        } else if (status === 422) {
+          toast.error("Invalid data");
+        } else if (status === 500) {
+          toast.error("Server error");
+        } else {
+          toast.error("Content not saved");
+        }
       }
-    } finally {
-      setSavedText(true);
     }
   };
 
@@ -87,7 +104,7 @@ ${aiResponse?.conclusion ?? ""}
         {aiResponse && (
           <div>
             <div className="relative">
-              <article className="flex-1 h-100 mt-4 px-3 py-5 text-sm text-justify border border-border-strong rounded md:max-h-100 overflow-y-auto scrollbar-none">
+              <article className="flex-1 h-100 mt-4 px-3 py-3 text-sm text-justify border border-border-strong rounded md:max-h-100 overflow-y-auto scrollbar-none">
                 <h1 className="text-2xl font-bold mb-4">{aiResponse?.title}</h1>
 
                 <p className="mb-5 indent-6">{aiResponse?.introduction}</p>
@@ -119,10 +136,10 @@ ${aiResponse?.conclusion ?? ""}
                 <p>{aiResponse?.conclusion}</p>
               </article>
 
-              <div className="mt-2 mx-5 absolute top-0 right-0">
+              <div className="mt-3 mx-3 absolute top-0 right-0">
                 <button
                   onClick={handleCopiedText}
-                  className="p-2 bg-bg text-primary border border-border rounded-4xl hover:text-white hover:bg-primary cursor-pointer"
+                  className="p-2 bg-bg  text-primary border-2 border-border rounded-4xl hover:text-white hover:bg-primary cursor-pointer"
                 >
                   {textCopied ? <MdDone size={23} /> : <BiCopy size={23} />}
                 </button>
@@ -131,15 +148,24 @@ ${aiResponse?.conclusion ?? ""}
 
             <div className="p-2 flex justify-between items-center">
               <span className="text-xs text-text-muted">
-                {formattedText.split(" ").length} words
+                words: {formattedText.split(" ").length}
               </span>
 
               <button
-                disabled={savedText}
+                disabled={saveStatus === "saving" || saveStatus === "saved"}
                 onClick={() => saveResponse(aiResponse)}
-                className={`p-2 text-sm text-white bg-primary rounded cursor-pointer ${savedText ? "opacity-65" : "hover:bg-primary-hover"}`}
+                className={`p-2 text-sm text-white bg-primary rounded
+  ${
+    saveStatus === "saving" || saveStatus === "saved"
+      ? "opacity-65 cursor-not-allowed"
+      : "hover:bg-primary-hover cursor-pointer"
+  }`}
               >
-                {savedText ? "Saved" : "Save to collection"}
+                {saveStatus === "saving"
+                  ? "Saving..."
+                  : saveStatus === "saved"
+                    ? "Saved"
+                    : "Save to Collection"}
               </button>
             </div>
           </div>

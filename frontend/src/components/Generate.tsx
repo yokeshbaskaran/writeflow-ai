@@ -14,6 +14,7 @@ type GenerateContentType = {
 
 // array of options
 const typeOptions = [
+  "General post",
   "LinkedIn Post",
   "Blog Post",
   "Create a Tweet(X) post",
@@ -93,7 +94,7 @@ const Generate = () => {
       // console.log("generate-data!:", response);
       const parsedResponse = JSON.parse(cleanedContent);
       setAiResponse(parsedResponse);
-      // console.log("parsedResponse", parsedResponse);
+      console.log("parsedResponse", parsedResponse);
       toast.success("Your Response generated");
 
       // sets the useState

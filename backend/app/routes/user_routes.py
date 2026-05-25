@@ -38,6 +38,7 @@ def save_content(
 
     content_document = {
         "user_email": current_user["sub"],
+        "content_type": data.content_type,
         "content": {
             "title": data.title,
             "introduction": data.introduction,
