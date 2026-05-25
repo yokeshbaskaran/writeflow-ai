@@ -33,17 +33,11 @@ def generate_content_route(
 # saves ai response
 @router.post("/save")
 def save_content(
-    data: GenerateContentRequest, current_user: dict = Depends(get_current_user)
+    data: SavedResponseRequest, current_user: dict = Depends(get_current_user)
 ):
 
     content_document = {
         "user_email": current_user["sub"],
-        "content_type": data.content_type,
-        "style": data.style,
-        "topic": data.topic,
-        "tone": data.tone,
-        "length": data.length,
-        "instructions": data.instructions,
         "content": {
             "title": data.title,
             "introduction": data.introduction,
