@@ -10,8 +10,8 @@ from db.database import contents_collection
 router = APIRouter()
 
 
-#   user profile check
-@router.get("/profile")
+#   user profile check - testing
+@router.get("/me")
 def profile(current_user=Depends(get_current_user)):
     return current_user
 
