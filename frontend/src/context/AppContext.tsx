@@ -7,7 +7,7 @@ type ContentSectionType = {
   content: string;
 };
 
-type AIResponseType = {
+export type AIResponseType = {
   title: string;
   introduction: string;
   sections: ContentSectionType[];
