@@ -12,3 +12,4 @@ db = client["writeflow_db"]
 
 # users collections
 users_collection = db["users"]
+contents_collection = db["contents"]
