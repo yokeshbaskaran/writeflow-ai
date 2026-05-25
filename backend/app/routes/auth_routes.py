@@ -38,8 +38,8 @@ def login(data: LoginRequest):
 
         return {
             "message": "User logined!",
-            "username": personName,
             "access_token": token,
+            "user": {"username": personName, "email": findUser["email"]},
         }
     except HTTPException:
         raise
