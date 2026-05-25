@@ -4,6 +4,8 @@ import { IoTrashOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { type AIResponseType, API_URL } from "../context/AppContext";
+import { MdDone } from "react-icons/md";
+import toast from "react-hot-toast";
 
 type OmitContentType = Omit<AIResponseType, "content_type">;
 
@@ -17,6 +19,8 @@ type AllResponseType = {
 
 const RecentResponse = () => {
   const [response, setResponse] = useState<AllResponseType[] | null>(null);
+  const [textCopied, setTextCopied] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   useEffect(() => {
     async function getAllResponses() {
@@ -64,7 +68,8 @@ const RecentResponse = () => {
     return "now";
   };
 
-  const countWords = (words: OmitContentType) => {
+  // format all words
+  const getFormattedText = (words: OmitContentType) => {
     const formattedText = `
 ${words?.title ?? ""}
 ---
@@ -77,7 +82,26 @@ ${
 ${words?.conclusion ?? ""}
 `;
 
-    return formattedText.split(" ").length;
+    return formattedText;
+  };
+
+  // count the format all words
+  const countWords = (content: OmitContentType) => {
+    const text = getFormattedText(content);
+    return text.split(" ").length;
+  };
+
+  // copying the response
+  const handleCopiedText = async (item: AllResponseType) => {
+    const text = getFormattedText(item.content);
+    await navigator.clipboard.writeText(text);
+
+    setCopiedId(item._id);
+    setTextCopied(true);
+    toast.success("Content copied!");
+    setTimeout(() => {
+      setTextCopied(false);
+    }, 2000);
   };
 
   return (
@@ -110,14 +134,12 @@ ${words?.conclusion ?? ""}
             {response &&
               response?.map((item, idx) => (
                 <tr key={idx} className="transition bg-bg hover:bg-bg-hover">
-                  <td className="w-2/6 px-2 py-5 text-center">
-                    <p className="font-normal text-left">
-                      {item?.content?.title}
-                    </p>
+                  <td className="w-2/6 px-2 py-5 font-normal text-center">
+                    {item?.content?.title}
                   </td>
 
                   <td className="w-1/6 px-4 py-4 text-center">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 capitalize">
+                    <span className="rounded-full bg-blue-100 px-3 py-2 text-xs font-medium text-blue-700 capitalize">
                       {item?.content_type}
                     </span>
                   </td>
@@ -136,8 +158,15 @@ ${words?.conclusion ?? ""}
                         <PiEye size={17} />
                       </button>
 
-                      <button className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-green-600 cursor-pointer">
-                        <BiCopy size={19} />
+                      <button
+                        onClick={() => handleCopiedText(item)}
+                        className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-green-600 cursor-pointer"
+                      >
+                        {textCopied && copiedId === item._id ? (
+                          <MdDone size={19} />
+                        ) : (
+                          <BiCopy size={19} />
+                        )}
                       </button>
 
                       <button className="border border-border rounded-lg p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600 cursor-pointer">
