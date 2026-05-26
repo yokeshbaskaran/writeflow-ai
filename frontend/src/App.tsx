@@ -16,6 +16,7 @@ const PageLoader = () => (
   </div>
 );
 
+// ProtectedRoute
 function ProtectedRoute() {
   const { authUser, authLoading } = useAppContext();
 
@@ -53,9 +54,6 @@ const App = () => {
         <Routes>
           {/* Layout routes */}
           <Route path="/" element={<MainLayout />}>
-            {/* Public */}
-            {/* <Route index element={<Home />} /> */}
-
             {/* Protected */}
             <Route element={<ProtectedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />
