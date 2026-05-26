@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAppContext, API_URL } from "../context/AppContext";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 type UserLoginType = {
   email: string;
@@ -10,10 +11,15 @@ type UserLoginType = {
 
 const Authpage = () => {
   const { pathToHome, setAuthUser } = useAppContext();
-  const [logined, setLogined] = useState(false);
+  const [logined] = useState(false);
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const navigate = useNavigate();
+  const handleSignup = () => {
+    navigate("/signup");
+  };
 
   // User Login
   const handleUserLogin = async () => {
@@ -84,7 +90,7 @@ const Authpage = () => {
 
             <div className="flex text-text flex-col items-start gap-2">
               <div className="w-full">
-                <p className="my-2 font-medium">Email:</p>
+                <p className="my-2 font-medium capitalize">Email:</p>
 
                 <input
                   type="email"
@@ -96,7 +102,7 @@ const Authpage = () => {
               </div>
 
               <div className="w-full">
-                <p className="my-2 font-medium">Password:</p>
+                <p className="my-2 font-medium capitalize">Password:</p>
 
                 <input
                   type="password"
@@ -118,32 +124,17 @@ const Authpage = () => {
             {/* Divider*/}
             <div className="my-5 border border-border-strong"></div>
 
-            {/* Signup/login account*/}
+            {/* Signup account*/}
             <div className="text-text flex justify-center items-center gap-2">
-              {logined ? (
-                <>
-                  <p>Already have an account?</p>
-                  <button
-                    onClick={() => setLogined(!logined)}
-                    className="text-primary hover:underline cursor-pointer"
-                  >
-                    Login
-                  </button>
-                </>
-              ) : (
-                <>
-                  <p>Don't have an account?</p>
+              <p>Don't have an account?</p>
 
-                  {/* Disabled for only Signup page  */}
-                  <button
-                    disabled
-                    onClick={() => setLogined(!logined)}
-                    className="text-primary hover:underline cursor-pointer"
-                  >
-                    Sign up
-                  </button>
-                </>
-              )}
+              {/* Disabled for only Signup page  */}
+              <button
+                onClick={handleSignup}
+                className="text-primary hover:underline cursor-pointer"
+              >
+                Sign up
+              </button>
             </div>
           </div>
         </div>
