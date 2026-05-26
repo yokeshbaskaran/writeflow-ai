@@ -15,10 +15,6 @@ const Navbar = () => {
 
   const { pathname } = useLocation();
 
-  // dummy authUser
-  // const authUser = false;
-  // const authUser = true;
-
   const unauthenticatedNav = [
     {
       link: "/",
@@ -48,11 +44,11 @@ const Navbar = () => {
       icon: <RiAiGenerateText size={25} />,
       linkName: "Generate",
     },
-    {
-      link: "/profile",
-      icon: <CgProfile size={25} />,
-      linkName: "Profile",
-    },
+    // {
+    //   link: "/profile",
+    //   icon: <CgProfile size={25} />,
+    //   linkName: "Profile",
+    // },
     // {
     //   link: "/search",
     //   icon: <IoSearch size={25} />,
@@ -69,7 +65,7 @@ const Navbar = () => {
 
   return (
     <>
-      <section className="h-12 px-3 py-7 border-b border-border flex items-center bg-bg">
+      <section className="w-full h-12 px-3 py-7 border-b border-border flex items-center bg-bg">
         <div className="w-full flex items-center justify-between">
           {/* i) Mobile Navbar  */}
 
