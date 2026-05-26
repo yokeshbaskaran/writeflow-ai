@@ -65,7 +65,11 @@ def signup(data: SignupRequest):
 
     # creating user
 
-    user = {"name": data.name, "email": data.email, "password": hash_pwd(data.password)}
+    user = {
+        "username": data.username,
+        "email": data.email,
+        "password": hash_pwd(data.password),
+    }
 
     users_collection.insert_one(user)
 

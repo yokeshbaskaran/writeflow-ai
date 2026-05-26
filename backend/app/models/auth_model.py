@@ -4,7 +4,7 @@ from pydantic import BaseModel, EmailStr
 
 # 1. Signup Schema
 class SignupRequest(BaseModel):
-    name: str
+    username: str
     email: EmailStr
     password: str
 
