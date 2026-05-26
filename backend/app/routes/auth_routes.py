@@ -30,6 +30,7 @@ def login(data: LoginRequest):
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credential"
             )
 
+        # creates token
         token = create_token(findUser["email"])
 
         # sends username
