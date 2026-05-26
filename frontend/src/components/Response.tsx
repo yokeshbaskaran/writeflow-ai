@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiCopy } from "react-icons/bi";
 import { MdDone } from "react-icons/md";
 import {
@@ -11,16 +11,16 @@ import toast from "react-hot-toast";
 
 const Response = () => {
   const [textCopied, setTextCopied] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">(
-    "idle",
-  );
-  const { aiResponse } = useAppContext();
+  const [saved, setSaved] = useState(false);
 
-  useEffect(() => {
-    if (aiResponse) {
-      localStorage.setItem("aiResponse", JSON.stringify(aiResponse));
-    }
-  }, [aiResponse]);
+  const { aiResponse, setAiResponse } = useAppContext();
+
+  // useEffect(() => {
+  //   if (aiResponse) {
+  //     localStorage.setItem("aiResponse", JSON.stringify(aiResponse));
+  //     console.log("aiResponse:", aiResponse);
+  //   }
+  // }, [aiResponse]);
 
   const formattedText = `
 ${aiResponse?.title ?? ""}
@@ -43,19 +43,16 @@ ${aiResponse?.conclusion ?? ""}
     setTextCopied(true);
     setTimeout(() => {
       setTextCopied(false);
-    }, 3000);
+    }, 2000);
   };
 
   const saveResponse = async (generatedContent: AIResponseType) => {
-    // console.log("generatedContent:", generatedContent);
+    console.log("generatedResponse:", generatedContent);
 
     try {
-      setSaveStatus("saving");
-
       const token = localStorage.getItem("token");
       if (!token) {
         toast.error("Please login first");
-        setSaveStatus("idle");
         return;
       }
 
@@ -75,12 +72,12 @@ ${aiResponse?.conclusion ?? ""}
         },
       });
 
+      const resData = response.data;
       toast.success("Content saved!");
-      setSaveStatus("saved");
-      console.log(response.data);
+      setSaved(true);
+      setAiResponse(null);
+      console.log("resData:", resData);
     } catch (error) {
-      setSaveStatus("idle");
-
       if (axios.isAxiosError(error)) {
         const status = error.response?.status;
 
@@ -97,6 +94,10 @@ ${aiResponse?.conclusion ?? ""}
     }
   };
 
+  const clearResponse = () => {
+    setAiResponse(null);
+  };
+
   return (
     <>
       {/* Response section */}
@@ -105,6 +106,13 @@ ${aiResponse?.conclusion ?? ""}
           <h2 className="text-xl text-primary font-semibold">
             AI Generated Response
           </h2>
+
+          <button
+            onClick={clearResponse}
+            className="mx-2 px-2 py-1 text-sm text-red-700 border border-red-900 rounded hover:text-white hover:bg-red-900 cursor-pointer"
+          >
+            Clear <span className="pl-1">X</span>
+          </button>
         </div>
 
         {aiResponse && (
@@ -158,19 +166,15 @@ ${aiResponse?.conclusion ?? ""}
               </span>
 
               <button
-                disabled={saveStatus === "saving" || saveStatus === "saved"}
                 onClick={() => saveResponse(aiResponse)}
+                disabled={saved}
                 className={`p-2 text-sm text-white bg-primary rounded ${
-                  saveStatus === "saving" || saveStatus === "saved"
+                  saved
                     ? "opacity-65 cursor-not-allowed"
                     : "hover:bg-primary-hover cursor-pointer"
                 }`}
               >
-                {saveStatus === "saving"
-                  ? "Saving..."
-                  : saveStatus === "saved"
-                    ? "Saved"
-                    : "Save to Collection"}
+                Save to collection
               </button>
             </div>
           </div>
@@ -179,7 +183,9 @@ ${aiResponse?.conclusion ?? ""}
         {!aiResponse && (
           <div className="flex-1 h-100 mt-4 px-3 py-5 text-sm text-justify border border-border-strong rounded md:max-h-100 overflow-y-auto scrollbar-thin">
             <p className="py-8 text-text-muted text-center">
-              No AI response generated yet.
+              {saved
+                ? "Your response is stored."
+                : "No AI response generated yet."}
             </p>
           </div>
         )}
