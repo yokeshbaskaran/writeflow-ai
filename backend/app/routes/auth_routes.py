@@ -32,9 +32,10 @@ def login(data: LoginRequest):
 
         token = create_token(findUser["email"])
 
-        # creating username
-        useremail = findUser["email"]
-        personName = useremail.split("@")[0]
+        # sends username
+
+        user_name = findUser["username"]
+        personName = user_name or user_name.split("@")[0]
 
         return {
             "message": "User logined!",
@@ -64,7 +65,6 @@ def signup(data: SignupRequest):
         return {"message": "Account Already exists"}
 
     # creating user
-
     user = {
         "username": data.username,
         "email": data.email,
