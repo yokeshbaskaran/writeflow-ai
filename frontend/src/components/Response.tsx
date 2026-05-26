@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiCopy } from "react-icons/bi";
 import { MdDone } from "react-icons/md";
 import {
@@ -15,6 +15,12 @@ const Response = () => {
     "idle",
   );
   const { aiResponse } = useAppContext();
+
+  useEffect(() => {
+    if (aiResponse) {
+      localStorage.setItem("aiResponse", JSON.stringify(aiResponse));
+    }
+  }, [aiResponse]);
 
   const formattedText = `
 ${aiResponse?.title ?? ""}
