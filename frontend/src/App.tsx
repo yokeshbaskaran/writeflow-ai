@@ -8,17 +8,40 @@ import Profile from "./pages/Profile";
 import { Toaster } from "react-hot-toast";
 import { useAppContext } from "./context/AppContext";
 
+// PageLoader
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    Loading...
+  </div>
+);
+
 function ProtectedRoute() {
-  const { authUser } = useAppContext();
+  const { authUser, authLoading } = useAppContext();
+
+  if (authLoading) {
+    return (
+      <div>
+        <PageLoader />
+      </div>
+    );
+  }
 
   return authUser ? <Outlet /> : <Navigate to="/auth" />;
 }
 
 // AuthRedirect
 function AuthRedirect() {
-  const { authUser } = useAppContext();
+  const { authUser, authLoading } = useAppContext();
 
-  return authUser ? <Navigate to="/" /> : <Outlet />;
+  if (authLoading) {
+    return (
+      <div>
+        <PageLoader />
+      </div>
+    );
+  }
+
+  return authUser ? <Navigate to="/dashboard" replace /> : <Outlet />;
 }
 
 const App = () => {
