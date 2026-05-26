@@ -46,9 +46,8 @@ const Authpage = () => {
       setPassword("");
       // sets token in localstorage
       localStorage.setItem("token", dbData.access_token);
-      // sets value in authUser and localstorage
+      // sets value in authUser
       setAuthUser(dbData.user);
-      localStorage.setItem("authUser", JSON.stringify(dbData.user));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const detail = error.response?.data?.detail;

@@ -1,4 +1,6 @@
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 //types
@@ -32,6 +34,7 @@ type AppContextType = {
 
   dark: boolean;
   setDark: React.Dispatch<React.SetStateAction<boolean>>;
+  authLoading: boolean;
 };
 
 export const API_URL = import.meta.env.VITE_API_URL;
@@ -56,12 +59,15 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   });
 
   // Authentication
-  const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
-  // console.log("aiResponse::", aiResponse);
-  const [authUser, setAuthUser] = useState<AuthUserType | null>(() => {
-    const storedUser = localStorage.getItem("authUser");
-    return storedUser ? JSON.parse(storedUser) : null;
+  // const [aiResponse, setAiResponse] = useState(null);
+
+  const [aiResponse, setAiResponse] = useState<AIResponseType | null>(() => {
+    const saved = localStorage.getItem("aiResponse");
+    return saved ? JSON.parse(saved) : null;
   });
+  // console.log("aiResponse::", aiResponse);
+  const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     if (dark) {
@@ -73,6 +79,64 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     }
   }, [dark]);
 
+  const getProfile = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return null;
+
+    try {
+      const response = await axios.get(`${API_URL}/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const detail = error.response?.data?.detail;
+
+        toast.error(
+          Array.isArray(detail)
+            ? detail[0].msg
+            : (detail ?? "Something went wrong"),
+        );
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const user = await getProfile();
+
+        if (user) {
+          setAuthUser(user);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          const detail = error.response?.data?.detail;
+
+          toast.error(
+            Array.isArray(detail)
+              ? detail[0].msg
+              : (detail ?? "Something went wrong"),
+          );
+        } else {
+          toast.error("Something went wrong");
+        }
+        localStorage.removeItem("token");
+        setAuthUser(null);
+      } finally {
+        setAuthLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
   // Redirects to Homepage
   const navigate = useNavigate();
   const pathToHome = () => {
@@ -81,7 +145,6 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
 
   const handleUserLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("authUser");
     setAuthUser(null);
   };
 
@@ -96,6 +159,7 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     handleUserLogout,
     aiResponse,
     setAiResponse,
+    authLoading,
   };
 
   return (
