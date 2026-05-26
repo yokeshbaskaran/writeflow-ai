@@ -44,7 +44,7 @@ const Authpage = () => {
 
       const response = await axios.post(API_URL + "/login", userData);
       const dbData = response.data;
-      console.log("login-data!:", response, dbData);
+      // console.log("login-data!:", response, dbData);
 
       toast.success(dbData.message);
       pathToHome();

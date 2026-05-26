@@ -51,7 +51,7 @@ const Authpage = () => {
 
       const response = await axios.post(API_URL + "/signup", userData);
       const dbData = response.data;
-      console.log("login-data!:", response, dbData);
+      // console.log("Signup-data!:", response, dbData);
 
       toast.success(dbData.message);
       pathToHome();
