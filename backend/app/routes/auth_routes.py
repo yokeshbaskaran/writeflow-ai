@@ -70,6 +70,7 @@ def signup(data: SignupRequest):
         "username": data.username,
         "email": data.email,
         "password": hash_pwd(data.password),
+        "credits": 20,
     }
 
     users_collection.insert_one(user)
