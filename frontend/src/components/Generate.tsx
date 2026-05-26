@@ -87,14 +87,15 @@ const Generate = () => {
       });
 
       const dbData = response.data;
+      // console.log("generate-data!:", dbData);
       const cleanedContent = dbData.content
         .replace(/```json/g, "")
         .replace(/```/g, "")
         .trim();
-      // console.log("generate-data!:", response);
+
       const parsedResponse = JSON.parse(cleanedContent);
       setAiResponse(parsedResponse);
-      console.log("parsedResponse", parsedResponse);
+      // console.log("parsedResponse:", parsedResponse);
       toast.success("Your Response generated");
 
       // sets the useState

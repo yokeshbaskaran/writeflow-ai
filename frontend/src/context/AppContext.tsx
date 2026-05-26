@@ -58,14 +58,12 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     return savedTheme === "dark";
   });
 
-  // Authentication
-  // const [aiResponse, setAiResponse] = useState(null);
+  // const [aiResponse, setAiResponse] = useState<AIResponseType | null>(() => {
+  //   const saved = localStorage.getItem("aiResponse");
+  //   return saved ? JSON.parse(saved) : null;
+  // });
+  const [aiResponse, setAiResponse] = useState<AIResponseType | null>(null);
 
-  const [aiResponse, setAiResponse] = useState<AIResponseType | null>(() => {
-    const saved = localStorage.getItem("aiResponse");
-    return saved ? JSON.parse(saved) : null;
-  });
-  // console.log("aiResponse::", aiResponse);
   const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
 
@@ -91,10 +89,15 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
         },
       });
 
-      return response.data;
+      const profileData = await response.data;
+
+      console.log("profileData:", profileData);
+
+      return profileData;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const detail = error.response?.data?.detail;
+        // console.log("appcontext-");
 
         toast.error(
           Array.isArray(detail)
