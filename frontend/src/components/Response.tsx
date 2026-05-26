@@ -107,16 +107,18 @@ ${aiResponse?.conclusion ?? ""}
             AI Generated Response
           </h2>
 
-          <button
-            onClick={clearResponse}
-            className="mx-2 px-2 py-1 text-sm text-red-700 border border-red-900 rounded hover:text-white hover:bg-red-900 cursor-pointer"
-          >
-            Clear <span className="pl-1">X</span>
-          </button>
+          {aiResponse && (
+            <button
+              onClick={clearResponse}
+              className="mx-2 px-2 py-1 text-sm text-red-700 border border-red-900 rounded hover:text-white hover:bg-red-900 cursor-pointer"
+            >
+              Clear <span className="pl-1">X</span>
+            </button>
+          )}
         </div>
 
         {aiResponse && (
-          <div>
+          <>
             <div className="relative">
               <article className="flex-1 h-100 mt-4 px-3 py-3 text-sm text-justify border border-border-strong rounded md:max-h-100 overflow-y-auto scrollbar-none">
                 <h1 className="text-2xl font-bold mb-4">{aiResponse?.title}</h1>
@@ -177,7 +179,7 @@ ${aiResponse?.conclusion ?? ""}
                 Save to collection
               </button>
             </div>
-          </div>
+          </>
         )}
 
         {!aiResponse && (
