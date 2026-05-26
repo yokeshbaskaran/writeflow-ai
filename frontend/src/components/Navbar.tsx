@@ -26,7 +26,7 @@ const Navbar = () => {
       linkName: "Home",
     },
     {
-      link: "/auth",
+      link: "/login",
       icon: <MdLockPerson size={25} />,
       linkName: "Login/SignUp",
     },

@@ -1,6 +1,7 @@
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
@@ -26,7 +27,7 @@ function ProtectedRoute() {
     );
   }
 
-  return authUser ? <Outlet /> : <Navigate to="/auth" />;
+  return authUser ? <Outlet /> : <Navigate to="/login" />;
 }
 
 // AuthRedirect
@@ -65,7 +66,8 @@ const App = () => {
 
           {/* Guest-only auth routes */}
           <Route element={<AuthRedirect />}>
-            <Route path="/auth" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Route>
         </Routes>
 
