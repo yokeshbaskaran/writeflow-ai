@@ -276,11 +276,16 @@ const Navbar = () => {
                           {/* divider  */}
                           <div className="my-1 w-full border-t border-border-strong"></div>
 
+                          {/* User credits  */}
                           <div className="flex items-center gap-2">
-                            <h3 className="text-green-600 text-sm font-bold">
+                            <h3 className="text-text text-sm font-bold">
                               Credits:
                             </h3>
-                            <span>{authUser.credits}</span>
+                            <span
+                              className={`${Number(authUser.credits) <= 5 ? "text-red-600" : Number(authUser.credits) <= 10 ? "text-yellow-600" : "text-green-600"} text-base font-bold`}
+                            >
+                              {authUser.credits}
+                            </span>
                           </div>
 
                           {/* divider  */}
