@@ -1,11 +1,12 @@
 import { PiEye } from "react-icons/pi";
 import { BiCopy } from "react-icons/bi";
-import { IoTrashOutline } from "react-icons/io5";
+import { IoLogoLinkedin, IoTrashOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { type AIResponseType, API_URL } from "../context/AppContext";
 import { MdDone } from "react-icons/md";
 import toast from "react-hot-toast";
+import { LuDot } from "react-icons/lu";
 
 type OmitContentType = Omit<AIResponseType, "content_type">;
 
@@ -72,7 +73,6 @@ const RecentResponse = () => {
   const getFormattedText = (words: OmitContentType) => {
     const formattedText = `
 ${words?.title ?? ""}
----
 ${words?.introduction ?? ""}
 ${
   words?.sections
@@ -106,61 +106,58 @@ ${words?.conclusion ?? ""}
 
   return (
     <>
-      <div className="overflow-x-auto rounded-xl border border-border-strong bg-bg-hover shadow-sm">
-        <table className="min-w-full divide-y divide-border-strong">
-          {/* Headings  */}
-          <thead className="bg-bg">
-            <tr className="divide-x divide-border-strong">
-              <th className="px-1 py-4 text-center text-sm font-bold text-primary">
-                Title
-              </th>
-              <th className="px-3 text-center text-sm font-bold text-primary">
-                Type
-              </th>
-              <th className="px-1 max-md:hidden text-center text-sm font-bold text-primary">
-                Words
-              </th>
-              <th className="max-md:hidden text-center text-sm font-bold text-primary">
-                Created
-              </th>
-              <th className="text-center text-sm font-bold text-primary">
-                Actions
-              </th>
-            </tr>
-          </thead>
+      <main>
+        <div className="px-3">
+          <h2 className="text-xl font-bold">History Responses:</h2>
+          <p className="my-2 text-text-muted text-base">
+            All your generated content in one place.
+          </p>
+        </div>
 
-          {/* Responses  */}
-          <tbody className="divide-y divide-border-strong bg-bg">
+        {/* Responses  */}
+        <section className="w-200">
+          <div className="flex flex-col gap-5">
             {response &&
               response?.map((item, idx) => (
-                <tr key={idx} className="transition bg-bg hover:bg-bg-hover">
-                  <td className="w-2/6 px-2 py-5 font-normal text-center">
-                    {item?.content?.title}
-                  </td>
+                <div
+                  key={idx}
+                  className="w-full p-2 flex items-center justify-between border border-border rounded-lg"
+                >
+                  <div className="w-2/4 flex items-center">
+                    <div className="p-2 text-white bg-blue-700 border rounded-xl">
+                      <IoLogoLinkedin size={25} />
+                    </div>
 
-                  <td className="w-1/6 px-4 py-4 text-center">
-                    <span className="rounded-full bg-blue-100 px-3 py-2 text-xs font-medium text-blue-700 capitalize">
-                      {item?.content_type}
-                    </span>
-                  </td>
+                    <div className="w-full mx-4 flex flex-col items-start gap-1">
+                      <p className="font-normal text-base text-center">
+                        {item?.content?.title}
+                      </p>
 
-                  <td className="w-1/6 max-md:hidden px-2 py-4 text-center text-sm">
-                    {countWords(item.content)}
-                  </td>
+                      <div className="w-3/4 flex items-center gap-2">
+                        <span className="w-full rounded-full text-sm font-medium text-text-muted capitalize">
+                          {item?.content_type}
+                        </span>
+                        <LuDot size={25} />
+                        <p className="w-full text-text-muted text-sm">
+                          {countWords(item.content)} words
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-                  <td className="w-1/6 max-md:hidden px-2 py-4 text-center text-sm text-text-muted">
+                  <div className="w-1/4 max-md:hidden px-2 py-4 text-center text-sm text-text-muted">
                     {formatDate(item.created_at)}
-                  </td>
+                  </div>
 
-                  <td className="w-1/6">
+                  <div className="w-1/4">
                     <div className="flex items-center justify-center gap-2">
                       <button className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-blue-600 cursor-pointer">
                         <PiEye size={17} />
                       </button>
 
                       <button
-                        onClick={() => handleCopiedText(item)}
                         className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-green-600 cursor-pointer"
+                        onClick={() => handleCopiedText(item)}
                       >
                         {textCopied && copiedId === item._id ? (
                           <MdDone size={19} />
@@ -173,12 +170,12 @@ ${words?.conclusion ?? ""}
                         <IoTrashOutline size={19} />
                       </button>
                     </div>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        </section>
+      </main>
     </>
   );
 };
