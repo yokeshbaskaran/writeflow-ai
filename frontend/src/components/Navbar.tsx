@@ -1,19 +1,26 @@
 import { CgProfile } from "react-icons/cg";
-import { IoHomeOutline } from "react-icons/io5";
-import { MdLockPerson, MdOutlineClose } from "react-icons/md";
+import {
+  IoHomeOutline,
+  IoSparklesSharp,
+  IoChevronDownSharp,
+} from "react-icons/io5";
+import { MdEmojiSymbols, MdLockPerson, MdOutlineClose } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { RiMenu5Fill, RiAiGenerateText } from "react-icons/ri";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import { LuUserRound } from "react-icons/lu";
 
 const Navbar = () => {
-  const { handleUserLogout, authUser } = useAppContext();
+  const { handleUserLogout, authUser, pathToHome } = useAppContext();
   const [mobileNav, setMobileNav] = useState(false);
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  // console.log("pathname:", pathname);
 
   const unauthenticatedNav = [
     {
@@ -21,19 +28,20 @@ const Navbar = () => {
       icon: <IoHomeOutline size={25} />,
       linkName: "Home",
     },
+    // {
+    //   // for demo purpose
+    //   link: "/demo",
+    //   icon: <MdEmojiSymbols size={25} />,
+    //   linkName: "demo",
+    // },
     {
       link: "/login",
       icon: <MdLockPerson size={25} />,
-      linkName: "Login/SignUp",
+      linkName: "Login",
     },
   ];
 
   const authenticatedNav = [
-    {
-      link: "/",
-      icon: <IoHomeOutline size={25} />,
-      linkName: "Home",
-    },
     {
       link: "/dashboard",
       icon: <RxDashboard size={25} />,
@@ -63,12 +71,15 @@ const Navbar = () => {
 
   const navDetails = authUser ? authenticatedNav : unauthenticatedNav;
 
+  const signupNavigate = () => {
+    navigate("/signup");
+  };
+
   return (
     <>
-      <section className="w-full h-12 px-3 py-7 border-b border-border flex items-center bg-bg">
+      <section className="w-full h-12 px-3 py-8 border-b border-border-strong flex items-center bg-bg">
         <div className="w-full flex items-center justify-between">
           {/* i) Mobile Navbar  */}
-
           <div className="md:hidden">
             {mobileNav && (
               <>
@@ -79,15 +90,21 @@ const Navbar = () => {
                 ></div>
 
                 {/* Sidebar Nav  */}
-                <div className="fixed top-0 left-0 w-64 h-screen px-2 py-1 z-50 bg-bg border-r border-border-strong">
+                <div className="fixed top-0 left-0 w-68 h-screen px-2 py-1 z-50 bg-bg border-r border-border-strong">
                   {/* 1. Logo  */}
                   <div className="px-1 py-2 flex items-center justify-between border-b border-border-strong">
-                    {/* Project Text Logo  */}
-                    <div>
-                      <h2 className="text-xl font-bold text-primary">
-                        WriteFlow<span className="text-text">.ai</span>
-                      </h2>
+                    {/*   Project Logo  */}
+                    <div className="md:hidden flex items-center gap-2">
+                      <div className="size-8 rounded-xl bg-linear-to-br from-violet-500 to-indigo-400 flex items-center justify-center shadow-lg shadow-violet-500/30">
+                        <IoSparklesSharp className="w-5 h-5 text-white" />
+                      </div>
+
+                      <h1 className="text-xl font-bold tracking-tight">
+                        WriteFlow<span className="text-primary-hover">.ai</span>
+                      </h1>
                     </div>
+
+                    {/* Close button  */}
                     <button
                       className="cursor-pointer"
                       onClick={() => setMobileNav(!mobileNav)}
@@ -98,7 +115,7 @@ const Navbar = () => {
 
                   {/* 2. Nav List  */}
                   <div>
-                    <nav className="mb-auto mt-2">
+                    <nav className="mb-auto mt-3">
                       <ul className="flex flex-col gap-3">
                         {navDetails.map((item, idx) => {
                           const isActive = pathname === item.link;
@@ -107,10 +124,10 @@ const Navbar = () => {
                             <li key={idx}>
                               <Link
                                 to={item.link}
-                                className={`px-2 py-2 flex items-center gap-3 rounded transition-colors duration-300 ${
+                                className={`px-1 py-2 flex items-center gap-3 rounded transition-colors duration-300 ${
                                   isActive
-                                    ? "bg-primary text-text"
-                                    : "hover:text-primary hover:bg-bg-hover"
+                                    ? "bg-primary text-white"
+                                    : "hover:text-primary"
                                 }`}
                               >
                                 {item.icon}
@@ -119,6 +136,14 @@ const Navbar = () => {
                             </li>
                           );
                         })}
+
+                        {authUser && (
+                          <Link to="/signup" className={``}>
+                            <li className="py-2 rounded transition-colors duration-300 bg-primary text-white text-lg text-center">
+                              Get Started
+                            </li>
+                          </Link>
+                        )}
                       </ul>
                     </nav>
                   </div>
@@ -126,53 +151,82 @@ const Navbar = () => {
               </>
             )}
 
-            {
-              <>
-                <div
-                  onClick={() => setMobileNav(!mobileNav)}
-                  className="p-2 text-white bg-primary rounded"
-                >
-                  <RiMenu5Fill size={20} />
-                </div>
-              </>
-            }
+            {/* Menu when mobile view  */}
+            <>
+              <div
+                onClick={() => setMobileNav(!mobileNav)}
+                className="p-2 text-white bg-primary rounded cursor-pointer"
+              >
+                <RiMenu5Fill size={20} />
+              </div>
+            </>
           </div>
           {/* i) Mobile Navbar  */}
 
           {/* ii) Desktop Navbar  */}
-          <div>
-            {/* Project Text Logo  */}
-            <h2 className="text-xl font-bold text-primary">
-              WriteFlow<span className="text-text">.ai</span>
-            </h2>
+          {/* 1. Project Text Logo  */}
+          <div className="flex items-center gap-2">
+            <div className="size-9 rounded-xl bg-linear-to-br from-violet-500 to-indigo-400 flex items-center justify-center shadow-lg shadow-violet-500/30">
+              <IoSparklesSharp className="w-5 h-5 text-white" />
+            </div>
+
+            <h1 className="text-2xl font-bold tracking-tight">
+              WriteFlow<span className="text-primary-hover">.ai</span>
+            </h1>
           </div>
 
-          <div className="max-md:hidden mx-5 w-full flex items-center justify-center gap-2">
-            {/* ii) Navbar list  */}
-            <div className="flex items-center gap-5">
+          {/* 2. Navbar list  */}
+          <div className="max-md:hidden mx-5 w-full flex items-center justify-end gap-2">
+            <div className="py-2 flex items-center gap-5">
               {navDetails.map((item, idx) => (
                 <Link
                   key={idx}
                   to={`${item.link}`}
-                  className="text-text hove:text-white transition-colors capitalize"
+                  className={`px-4 py-1 ${pathname === item.link ? "text-white bg-primary rounded-4xl" : "text-text-muted hover:text-primary"}  transition capitalize`}
                 >
                   {item.linkName}
                 </Link>
               ))}
+
+              {!authUser && (
+                <button
+                  onClick={signupNavigate}
+                  className="bg-primary text-white hover:opacity-85 transition px-5 py-2 rounded-2xl font-medium shadow-md shadow-violet-700/30 cursor-pointer"
+                >
+                  Get Started
+                </button>
+              )}
             </div>
 
             {/* Logout only exist when user logined */}
             {authUser && (
-              <button
-                onClick={handleUserLogout}
-                className="mx-2 px-2 py-1 text-red-700 border border-red-900 rounded cursor-pointer"
-              >
-                Logout
-              </button>
+              <div>
+                user profile
+                <button
+                  onClick={handleUserLogout}
+                  className="mx-2 px-2 py-1 text-red-700 border border-red-900 rounded cursor-pointer"
+                >
+                  Logout
+                </button>
+              </div>
             )}
           </div>
 
-          <div>
+          {/* User Profile exist only for Mobile view in top navbar*/}
+          <div className="md:hidden">
+            <div className="px-3 py-1 flex items-center justify-center gap-2 bg-bg-soft border border-border rounded cursor-pointer">
+              <div className="p-2 border border-primary rounded-full cursor-pointer">
+                <LuUserRound size={20} />
+              </div>
+              <p className="capitalize">{authUser?.username}</p>
+              <div className="mt-1">
+                <IoChevronDownSharp size={15} />
+              </div>
+            </div>
+          </div>
+
+          {/* DarkMode exist only for desktop in top navbar*/}
+          <div className="max-md:hidden">
             <DarkMode />
           </div>
         </div>
