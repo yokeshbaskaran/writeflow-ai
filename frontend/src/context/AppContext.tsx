@@ -20,6 +20,7 @@ export type AIResponseType = {
 export type AuthUserType = {
   username: string;
   email: string;
+  credits: string;
 };
 
 type AppContextType = {
