@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 
 type GenerateContentType = {
   content_type: string;
-  style: string;
   topic: string;
   tone: string;
   length: string;
@@ -23,13 +22,6 @@ const typeOptions = [
   "Resume Bullet Points",
 ];
 
-const styleOptions = [
-  "Tutorial",
-  "Informative",
-  "Step-by-Step guide",
-  "Case Study",
-];
-
 const toneOptions = ["Casual", "Technical", "Professional", "Educational"];
 
 const lengthOptions = [
@@ -41,7 +33,6 @@ const lengthOptions = [
 
 const Generate = () => {
   const [type, setType] = useState("");
-  const [style, setStyle] = useState("");
   const [topic, setTopic] = useState("");
   const [tone, setTone] = useState("");
   const [length, setLength] = useState("");
@@ -71,7 +62,6 @@ const Generate = () => {
 
       const data: GenerateContentType = {
         content_type: type,
-        style,
         topic,
         tone,
         length,
@@ -100,7 +90,6 @@ const Generate = () => {
 
       // sets the useState
       setType("");
-      setStyle("");
       setTopic("");
       setTone("");
       setLength("");
@@ -139,7 +128,7 @@ const Generate = () => {
           <section className="w-full px-1 pt-2 flex justify-center items-start gap-2 text-sm">
             {/* Content Type  */}
 
-            <div className="w-1/2 flex flex-col">
+            <div className="w-full flex flex-col">
               <label htmlFor="type" className="text-text font-semibold">
                 Content Type
               </label>
@@ -152,28 +141,6 @@ const Generate = () => {
               >
                 <option value="">choose type</option>
                 {typeOptions.map((item, idx) => (
-                  <option key={idx} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Style  */}
-            <div className="w-1/2 flex flex-col">
-              <label htmlFor="style" className="font-semibold">
-                Style
-                <span className="pl-1 text-text-muted">(Optional)</span>
-              </label>
-              <select
-                className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
-                id="style"
-                name="style"
-                value={style}
-                onChange={(e) => setStyle(e.target.value)}
-              >
-                <option value="">choose style</option>
-                {styleOptions.map((item, idx) => (
                   <option key={idx} value={item}>
                     {item}
                   </option>
