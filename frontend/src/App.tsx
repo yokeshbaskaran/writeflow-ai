@@ -8,6 +8,7 @@ import Create from "./pages/Create";
 import Profile from "./pages/Profile";
 import { Toaster } from "react-hot-toast";
 import { useAppContext } from "./context/AppContext";
+import Home from "./pages/Home";
 
 // PageLoader
 const PageLoader = () => (
@@ -54,6 +55,10 @@ const App = () => {
         <Routes>
           {/* Layout routes */}
           <Route path="/" element={<MainLayout />}>
+            {/* Public  */}
+            <Route index element={<Home />} />
+            {/* <Route path="demo" element={<Navbars />} /> */}
+
             {/* Protected */}
             <Route element={<ProtectedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />

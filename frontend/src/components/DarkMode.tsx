@@ -9,7 +9,7 @@ const DarkMode = () => {
   return (
     <>
       <motion.button
-        className={`px-2 py-2 rounded cursor-pointer text-sm font-semibold ${dark ? "text-primary bg-bg-hover" : "text-white bg-black"}`}
+        className={`px-2 py-2 rounded cursor-pointer text-sm font-semibold ${dark ? "text-[#FAE369] bg-bg-hover" : "text-white bg-black"}`}
         onClick={() => setDark(!dark)}
       >
         <div className="flex items-center gap-2">
