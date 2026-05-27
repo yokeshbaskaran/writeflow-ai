@@ -154,9 +154,9 @@ const Navbar = () => {
                     <div className="mt-3 border-t border-border"></div>
 
                     {/* 3. User profile  */}
-                    <div className="mt-auto p-3">
+                    <div className="mt-auto mb-3 border border-border">
                       {authUser && (
-                        <div className="my-5 px-2">
+                        <div className="mt-4 mb-3 px-3">
                           <div className="flex items-center gap-0">
                             {/* Profile Image Container */}
                             <div className="size-14 -mt-1 object-cover rounded-full">
@@ -170,16 +170,27 @@ const Navbar = () => {
                                 <RxAvatar className="size-full px-2" />
                               )}
                             </div>
-
                             {/* User profile details  */}
-                            <div className="flex flex-col">
-                              <span className="pl-1 text-lg font-semibold capitalize">
+                            <div className="pl-1 flex flex-col">
+                              <span className="text-lg font-semibold capitalize">
                                 {authUser?.username}
                               </span>
-                              <span className="text-sm text-gray-500">
+                              {/* <span className="text-sm text-gray-500">
                                 @{authUser?.username}
-                              </span>
-                            </div>
+                              </span> */}
+
+                              {/* User credits  */}
+                              <div className="flex items-center gap-2">
+                                <h3 className="text-text-muted text-sm font-bold">
+                                  Credits:
+                                </h3>
+                                <span
+                                  className={`${Number(authUser.credits) <= 5 ? "text-red-600" : Number(authUser.credits) <= 10 ? "text-yellow-600" : "text-green-600"} text-base font-bold`}
+                                >
+                                  {authUser.credits}
+                                </span>
+                              </div>
+                            </div>{" "}
                           </div>
 
                           {/* Logout button  */}
