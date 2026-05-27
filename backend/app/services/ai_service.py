@@ -10,9 +10,6 @@ def build_prompt(data: GenerateContentRequest):
 Generate a {data.length} words with
 {data.content_type} 
 
-Style:
-{data.style} 
-
 Topic:
 {data.topic}
 
