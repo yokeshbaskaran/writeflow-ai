@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useAppContext, API_URL } from "../context/AppContext";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 type UserLoginType = {
   email: string;
@@ -10,16 +9,11 @@ type UserLoginType = {
 };
 
 const Authpage = () => {
-  const { pathToHome, setAuthUser } = useAppContext();
+  const { pathToHome, setAuthUser, signupNavigate } = useAppContext();
   const [logined] = useState(false);
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  const navigate = useNavigate();
-  const handleSignup = () => {
-    navigate("/signup");
-  };
 
   // User Login
   const handleUserLogin = async () => {
@@ -47,7 +41,7 @@ const Authpage = () => {
       // console.log("login-data!:", response, dbData);
 
       toast.success(dbData.message);
-      pathToHome();
+      pathToHome(); // redirects to Home
       setEmail("");
       setPassword("");
       // sets token in localstorage
@@ -130,7 +124,7 @@ const Authpage = () => {
 
               {/* Disabled for only Signup page  */}
               <button
-                onClick={handleSignup}
+                onClick={signupNavigate}
                 className="text-primary hover:underline cursor-pointer"
               >
                 Sign up

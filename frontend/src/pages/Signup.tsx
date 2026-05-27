@@ -11,7 +11,7 @@ type UserSignupType = {
 };
 
 const Authpage = () => {
-  const { pathToHome } = useAppContext();
+  const { pathToHome, loginNavigate } = useAppContext();
   const [logined] = useState(true);
 
   const [username, setUsername] = useState<string>("");
@@ -19,9 +19,6 @@ const Authpage = () => {
   const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate("/login");
-  };
 
   // User Login
   const handleUserSignup = async () => {
@@ -58,7 +55,7 @@ const Authpage = () => {
       setUsername("");
       setEmail("");
       setPassword("");
-      navigate("/login");
+      navigate("/login"); // redirects to LoginPage
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const detail = error.response?.data?.detail;
@@ -145,7 +142,7 @@ const Authpage = () => {
             <div className="text-text flex justify-center items-center gap-2">
               <p>Already have an account?</p>
               <button
-                onClick={handleLogin}
+                onClick={loginNavigate}
                 className="text-primary hover:underline cursor-pointer"
               >
                 Login

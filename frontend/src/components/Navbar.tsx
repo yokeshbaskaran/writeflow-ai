@@ -1,25 +1,23 @@
-import { CgProfile } from "react-icons/cg";
 import {
   IoHomeOutline,
   IoSparklesSharp,
   IoChevronDownSharp,
 } from "react-icons/io5";
-import { MdEmojiSymbols, MdLockPerson, MdOutlineClose } from "react-icons/md";
+import { MdLockPerson, MdOutlineClose } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { RiMenu5Fill, RiAiGenerateText } from "react-icons/ri";
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import DarkMode from "./DarkMode";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { LuUserRound } from "react-icons/lu";
 
 const Navbar = () => {
-  const { handleUserLogout, authUser, pathToHome } = useAppContext();
+  const { handleUserLogout, authUser, signupNavigate } = useAppContext();
   const [mobileNav, setMobileNav] = useState(false);
 
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   // console.log("pathname:", pathname);
 
   const unauthenticatedNav = [
@@ -70,10 +68,6 @@ const Navbar = () => {
   ];
 
   const navDetails = authUser ? authenticatedNav : unauthenticatedNav;
-
-  const signupNavigate = () => {
-    navigate("/signup");
-  };
 
   return (
     <>

@@ -24,6 +24,8 @@ export type AuthUserType = {
 
 type AppContextType = {
   pathToHome: () => void;
+  signupNavigate: () => void;
+  loginNavigate: () => void;
   //auth
   handleUserLogout: () => void;
   aiResponse: AIResponseType | null;
@@ -149,6 +151,16 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     navigate("/");
   };
 
+  // Redirects to Signup page
+  const signupNavigate = () => {
+    navigate("/signup");
+  };
+
+  // Redirects to Login page
+  const loginNavigate = () => {
+    navigate("/login");
+  };
+
   const handleUserLogout = () => {
     localStorage.removeItem("token");
     setAuthUser(null);
@@ -157,6 +169,10 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
   //context values
   const contextValue = {
     pathToHome,
+    signupNavigate,
+    loginNavigate,
+
+    //dark mode
     dark,
     setDark,
 
