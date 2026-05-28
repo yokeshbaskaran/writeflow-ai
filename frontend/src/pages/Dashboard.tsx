@@ -56,8 +56,7 @@ export const ContentData = () => {
   const { response, authUser } = useAppContext();
 
   // creditsData
-  const creditsData = authUser?.credits || "N/A";
-
+  const creditsData = authUser?.credits || 0;
   // wordsData
   const generateWordCount = () => {
     const totalWords = response?.reduce(
@@ -68,10 +67,10 @@ export const ContentData = () => {
     return totalWords;
   };
   const wordCountFunction = generateWordCount();
-  const wordsData = wordCountFunction || "N/A";
+  const wordsData = wordCountFunction || 0;
 
   // contentData
-  const contentData = response?.length || "N/A";
+  const contentData = response?.length || 0;
 
   const credits = {
     icon: <HiOutlineSparkles size={30} />,

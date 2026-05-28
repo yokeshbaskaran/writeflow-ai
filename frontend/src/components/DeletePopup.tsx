@@ -1,7 +1,4 @@
-import axios from "axios";
-import toast from "react-hot-toast";
 import { IoWarningOutline } from "react-icons/io5";
-import { API_URL } from "../context/AppContext";
 
 type DeleteChatProps = {
   onCancel: () => void;
