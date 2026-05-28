@@ -12,10 +12,12 @@ import {
 import { MdDone } from "react-icons/md";
 import toast from "react-hot-toast";
 import { LuDot } from "react-icons/lu";
+import DeletePopup from "./DeletePopup";
 
 const RecentResponse = () => {
   const [textCopied, setTextCopied] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { response, setResponse } = useAppContext();
 
@@ -100,71 +102,126 @@ ${words?.conclusion ?? ""}
     }, 2000);
   };
 
+  const handleDeleteResponse = async (responseID: string) => {
+    console.log("Delete response!");
+
+    const token = localStorage.getItem("token");
+
+    if (!token) return null;
+
+    try {
+      if (!responseID.trim()) {
+        toast.error("Response id is required");
+        return;
+      }
+
+      const response = await axios.delete(API_URL + `/response/${responseID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const dbData = response.data;
+      setResponse((prev) => prev?.filter((item) => item._id !== responseID));
+
+      // console.log("login-data!:", response, dbData);
+
+      toast.success(dbData.message);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const detail = error.response?.data?.detail;
+
+        toast.error(
+          Array.isArray(detail)
+            ? detail[0].msg
+            : (detail ?? "Something went wrong"),
+        );
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
   return (
     <>
-      <main>
+      <main className="">
         {/* History of Responses  */}
-        <section className="w-200 p-2 overflow-y-auto">
-          <div className="flex flex-col gap-4 overflow-y-auto">
-            {response &&
-              response?.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="w-full p-2 flex items-center justify-between border border-border rounded-lg"
-                >
-                  <div className="w-2/4 flex items-center">
-                    <div className="p-2 text-white bg-blue-700 border rounded-xl">
-                      <IoLogoLinkedin size={25} />
+        {response?.length > 0 && (
+          <section className="yoki w-200 p-2 overflow-y-auto">
+            <div className="flex flex-col gap-4 overflow-y-auto">
+              {response &&
+                response?.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="w-full p-2 flex items-center justify-between border border-border rounded-lg"
+                  >
+                    <div className="w-2/4 flex items-center">
+                      <div className="p-2 text-white bg-blue-700 border rounded-xl">
+                        <IoLogoLinkedin size={25} />
+                      </div>
+
+                      <div className="w-full mx-4 flex flex-col items-start gap-1">
+                        <p className="font-normal text-base text-center">
+                          {item?.content?.title}
+                        </p>
+
+                        <div className="w-3/4 flex items-center gap-2">
+                          <span className="w-full rounded-full text-sm font-medium text-text-muted capitalize">
+                            {item?.content_type}
+                          </span>
+                          <LuDot size={25} />
+                          <p className="w-full text-text-muted text-sm">
+                            {/* {countWords(item.content)} words */}
+                            {item?.words_created} words
+                          </p>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="w-full mx-4 flex flex-col items-start gap-1">
-                      <p className="font-normal text-base text-center">
-                        {item?.content?.title}
-                      </p>
+                    <div className="w-1/4 max-md:hidden px-2 py-4 text-center text-sm text-text-muted">
+                      {formatDate(item.created_at)}
+                    </div>
 
-                      <div className="w-3/4 flex items-center gap-2">
-                        <span className="w-full rounded-full text-sm font-medium text-text-muted capitalize">
-                          {item?.content_type}
-                        </span>
-                        <LuDot size={25} />
-                        <p className="w-full text-text-muted text-sm">
-                          {/* {countWords(item.content)} words */}
-                          {item?.words_created} words
-                        </p>
+                    <div className="w-1/4">
+                      <div className="flex items-center justify-center gap-2">
+                        <button className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-blue-600 cursor-pointer">
+                          <PiEye size={17} />
+                        </button>
+
+                        <button
+                          className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-green-600 cursor-pointer"
+                          onClick={() => handleCopiedText(item)}
+                        >
+                          {textCopied && copiedId === item._id ? (
+                            <MdDone size={19} />
+                          ) : (
+                            <BiCopy size={19} />
+                          )}
+                        </button>
+
+                        <button
+                          onClick={() => setDeleteId(item._id)}
+                          className="border border-border rounded-lg p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600 cursor-pointer"
+                        >
+                          <IoTrashOutline size={19} />
+                        </button>
+
+                        {deleteId && (
+                          <DeletePopup
+                            responseID={deleteId}
+                            onCancel={() => setDeleteId(null)}
+                            onConfirm={() => {
+                              handleDeleteResponse(deleteId);
+                              setDeleteId(null);
+                            }}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
-
-                  <div className="w-1/4 max-md:hidden px-2 py-4 text-center text-sm text-text-muted">
-                    {formatDate(item.created_at)}
-                  </div>
-
-                  <div className="w-1/4">
-                    <div className="flex items-center justify-center gap-2">
-                      <button className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-blue-600 cursor-pointer">
-                        <PiEye size={17} />
-                      </button>
-
-                      <button
-                        className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-green-600 cursor-pointer"
-                        onClick={() => handleCopiedText(item)}
-                      >
-                        {textCopied && copiedId === item._id ? (
-                          <MdDone size={19} />
-                        ) : (
-                          <BiCopy size={19} />
-                        )}
-                      </button>
-
-                      <button className="border border-border rounded-lg p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600 cursor-pointer">
-                        <IoTrashOutline size={19} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </section>
+                ))}
+            </div>
+          </section>
+        )}
       </main>
     </>
   );
