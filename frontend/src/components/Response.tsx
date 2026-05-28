@@ -56,6 +56,7 @@ ${aiResponse?.conclusion ?? ""}
         return;
       }
 
+      const generatedWords = formattedText.split(" ").length;
       // response data
       const payload = {
         title: generatedContent.title,
@@ -63,6 +64,7 @@ ${aiResponse?.conclusion ?? ""}
         introduction: generatedContent.introduction,
         sections: generatedContent.sections,
         conclusion: generatedContent.conclusion,
+        words_created: generatedWords,
       };
       // console.log("save to db response:", payload);
 
