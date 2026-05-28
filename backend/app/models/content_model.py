@@ -4,8 +4,8 @@ from pydantic import BaseModel
 # ai response model
 class GenerateContentRequest(BaseModel):
     content_type: str
-    tone: str | None = None
     topic: str
+    tone: str | None = None
     length: str
     instructions: str | None = None
 
