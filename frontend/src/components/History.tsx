@@ -3,42 +3,38 @@ import { BiCopy } from "react-icons/bi";
 import { IoLogoLinkedin, IoTrashOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { type AIResponseType, API_URL } from "../context/AppContext";
+import {
+  type OmitContentType,
+  type AllResponseType,
+  API_URL,
+  useAppContext,
+} from "../context/AppContext";
 import { MdDone } from "react-icons/md";
 import toast from "react-hot-toast";
 import { LuDot } from "react-icons/lu";
 
-type OmitContentType = Omit<AIResponseType, "content_type">;
-
-type AllResponseType = {
-  _id: string;
-  user_email: string;
-  created_at: string;
-  content: OmitContentType;
-  content_type: string;
-};
-
 const RecentResponse = () => {
-  const [response, setResponse] = useState<AllResponseType[] | null>(null);
   const [textCopied, setTextCopied] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const { response, setResponse } = useAppContext();
 
   useEffect(() => {
     async function getAllResponses() {
       const token = localStorage.getItem("token");
-      const response = await axios.get(API_URL + "/responses", {
+      const res = await axios.get(API_URL + "/responses", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      const dbData = response.data;
+      const dbData = res.data;
       console.log("responses:::", dbData);
       setResponse(dbData);
     }
 
     getAllResponses();
-  }, []);
+  }, [setResponse]);
 
   // format the date
   const formatDate = (isoTimestamp: string) => {
@@ -107,16 +103,9 @@ ${words?.conclusion ?? ""}
   return (
     <>
       <main>
-        <div className="px-3">
-          <h2 className="text-xl font-bold">History Responses:</h2>
-          <p className="my-2 text-text-muted text-base">
-            All your generated content in one place.
-          </p>
-        </div>
-
-        {/* Responses  */}
-        <section className="w-200">
-          <div className="flex flex-col gap-5">
+        {/* History of Responses  */}
+        <section className="w-200 p-2 overflow-y-auto">
+          <div className="flex flex-col gap-4 overflow-y-auto">
             {response &&
               response?.map((item, idx) => (
                 <div
