@@ -29,7 +29,7 @@ const RecentResponse = () => {
       });
 
       const dbData = res.data;
-      console.log("responses:::", dbData);
+      console.log("all-responses:", dbData);
       setResponse(dbData);
     }
 
@@ -81,11 +81,11 @@ ${words?.conclusion ?? ""}
     return formattedText;
   };
 
-  // count the format all words
-  const countWords = (content: OmitContentType) => {
-    const text = getFormattedText(content);
-    return text.split(" ").length;
-  };
+  // // count the format all words
+  // const countWords = (content: OmitContentType) => {
+  //   const text = getFormattedText(content);
+  //   return text.split(" ").length;
+  // };
 
   // copying the response
   const handleCopiedText = async (item: AllResponseType) => {
@@ -128,7 +128,8 @@ ${words?.conclusion ?? ""}
                         </span>
                         <LuDot size={25} />
                         <p className="w-full text-text-muted text-sm">
-                          {countWords(item.content)} words
+                          {/* {countWords(item.content)} words */}
+                          {item?.words_created} words
                         </p>
                       </div>
                     </div>

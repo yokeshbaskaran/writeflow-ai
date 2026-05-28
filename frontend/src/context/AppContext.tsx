@@ -23,15 +23,17 @@ export type AuthUserType = {
   credits: string;
 };
 
+export type OmitContentType = Omit<AIResponseType, "content_type">;
+
+// saved history responses
 export type AllResponseType = {
   _id: string;
   user_email: string;
   created_at: string;
   content: OmitContentType;
   content_type: string;
+  words_created: number;
 };
-
-export type OmitContentType = Omit<AIResponseType, "content_type">;
 
 type AppContextType = {
   pathToHome: () => void;

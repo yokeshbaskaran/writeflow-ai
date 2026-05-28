@@ -53,11 +53,24 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 // };
 
 export const ContentData = () => {
-  const { response } = useAppContext();
-  console.log("response::", response?.length);
+  const { response, authUser } = useAppContext();
 
-  const creditsData = response?.length || "N/A";
-  const wordsData = response?.length || "N/A";
+  // creditsData
+  const creditsData = authUser?.credits || "N/A";
+
+  // wordsData
+  const generateWordCount = () => {
+    const totalWords = response?.reduce(
+      (sum, item) => sum + (item.words_created || 0),
+      0,
+    );
+    // console.log("totalWords:", totalWords);
+    return totalWords;
+  };
+  const wordCountFunction = generateWordCount();
+  const wordsData = wordCountFunction || "N/A";
+
+  // contentData
   const contentData = response?.length || "N/A";
 
   const credits = {
