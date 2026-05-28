@@ -52,8 +52,8 @@ type AppContextType = {
   authLoading: boolean;
 
   //responses
-  response: AllResponseType[] | null;
-  setResponse: React.Dispatch<React.SetStateAction<AllResponseType[] | null>>;
+  response: AllResponseType[] | [];
+  setResponse: React.Dispatch<React.SetStateAction<AllResponseType[] | []>>;
 };
 
 export const API_URL = import.meta.env.VITE_API_URL;
@@ -85,7 +85,7 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
 
   const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [response, setResponse] = useState<AllResponseType[] | null>(null);
+  const [response, setResponse] = useState<AllResponseType[]>([]);
 
   useEffect(() => {
     // set dark first
