@@ -23,6 +23,16 @@ export type AuthUserType = {
   credits: string;
 };
 
+export type AllResponseType = {
+  _id: string;
+  user_email: string;
+  created_at: string;
+  content: OmitContentType;
+  content_type: string;
+};
+
+export type OmitContentType = Omit<AIResponseType, "content_type">;
+
 type AppContextType = {
   pathToHome: () => void;
   signupNavigate: () => void;
@@ -38,6 +48,10 @@ type AppContextType = {
   dark: boolean;
   setDark: React.Dispatch<React.SetStateAction<boolean>>;
   authLoading: boolean;
+
+  //responses
+  response: AllResponseType[] | null;
+  setResponse: React.Dispatch<React.SetStateAction<AllResponseType[] | null>>;
 };
 
 export const API_URL = import.meta.env.VITE_API_URL;
@@ -69,6 +83,7 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
 
   const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [response, setResponse] = useState<AllResponseType[] | null>(null);
 
   useEffect(() => {
     // set dark first
@@ -183,6 +198,10 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
     aiResponse,
     setAiResponse,
     authLoading,
+
+    //responses
+    response,
+    setResponse,
   };
 
   return (

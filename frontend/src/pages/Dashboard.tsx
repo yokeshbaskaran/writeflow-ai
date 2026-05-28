@@ -1,4 +1,4 @@
-import RecentResponse from "../components/RecentResponse";
+import History from "../components/History";
 import { useAppContext } from "../context/AppContext";
 
 const Dashboard = () => {
@@ -6,20 +6,36 @@ const Dashboard = () => {
   const personName = authUser?.username;
 
   return (
-    <div>
-      {/* <h2>This is Dashboard</h2> */}
-      <div className="my-3 mx-3 text-center">
-        <h1 className="text-2xl font-bold">
-          Hi! Welcome,{" "}
-          <span className="text-primary capitalize">{personName}</span>
-        </h1>
+    <div className="h-screen overflow-hidden flex flex-col">
+      <div className="shrink-0">
+        <div className="my-3 mx-3 text-center">
+          <h1 className="text-2xl font-bold">
+            Hi! Welcome,{" "}
+            <span className="text-primary capitalize">{personName}</span>
+          </h1>
 
-        <p className="mt-1 text-text-muted">
-          Here's what's happening with your content today.
-        </p>
+          <p className="mt-1 text-text-muted">
+            Here's what's happening with your content today.
+          </p>
+        </div>
+
+        <ContentData />
       </div>
-      <ContentData />
-      <RecentResponse />
+
+      <div className="flex flex-col items-start overflow-hidden px-3 pb-3">
+        <div className="px-3">
+          <h2 className="text-xl font-bold">History Responses:</h2>
+          <p className="my-2 text-text-muted text-base">
+            All your generated content in one place.
+          </p>
+        </div>
+
+        <div className="w-full my-2 border-b border-border"></div>
+
+        <div className="h-full overflow-y-auto scrollbar-none pr-2">
+          <History />
+        </div>
+      </div>
     </div>
   );
 };
@@ -37,22 +53,29 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 // };
 
 export const ContentData = () => {
+  const { response } = useAppContext();
+  console.log("response::", response?.length);
+
+  const creditsData = response?.length || "N/A";
+  const wordsData = response?.length || "N/A";
+  const contentData = response?.length || "N/A";
+
   const credits = {
     icon: <HiOutlineSparkles size={30} />,
     title: "Credits left",
-    data: 120,
+    data: creditsData,
   };
 
   const words = {
     icon: <IoDocumentTextSharp size={30} />,
     title: "Words generated",
-    data: "18.5k",
+    data: wordsData,
   };
 
   const content = {
     icon: <HiOutlinePencilAlt size={30} />,
     title: "Contents created",
-    data: "50",
+    data: contentData,
   };
 
   return (
