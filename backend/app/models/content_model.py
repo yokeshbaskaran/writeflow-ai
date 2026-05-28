@@ -16,3 +16,4 @@ class SavedResponseRequest(BaseModel):
     introduction: str
     sections: list[dict]
     conclusion: str
+    words_created: int

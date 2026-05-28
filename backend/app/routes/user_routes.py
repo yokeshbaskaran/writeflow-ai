@@ -67,6 +67,7 @@ def save_content(
             "sections": data.sections,
             "conclusion": data.conclusion,
         },
+        "words_created": data.words_created,
         "created_at": datetime.utcnow(),
     }
 
