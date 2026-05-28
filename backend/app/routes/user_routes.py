@@ -6,6 +6,7 @@ from models.content_model import GenerateContentRequest, SavedResponseRequest
 from services.ai_service import build_prompt, generate_contents
 from datetime import datetime
 from db.database import users_collection, contents_collection
+from bson import ObjectId
 
 router = APIRouter()
 
@@ -92,3 +93,21 @@ def get_all_responses(current_user: dict = Depends(get_current_user)):
         responses.append(item)
 
     return responses
+
+
+@router.delete("/response/{response_id}")
+def delete_response(response_id: str, current_user: dict = Depends(get_current_user)):
+    users_email = current_user.get("email")
+
+    # response belonging to logined user
+    response = contents_collection.find_one(
+        {"_id": ObjectId(response_id), "user_email": users_email}
+    )
+
+    if not response:
+        raise HTTPException(status_code=404, detail="Response not found!")
+
+    # delete the response
+    contents_collection.delete_one({"_id": ObjectId(response_id)})
+
+    return {"message": "Response deleted!"}
