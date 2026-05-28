@@ -55,7 +55,7 @@ const Generate = () => {
     setDisplayText(true);
 
     try {
-      if (!type.trim() || !topic.trim() || !tone.trim() || !length.trim()) {
+      if (!type.trim() || !topic.trim() || !length.trim()) {
         toast.error("Enter all details to generate!");
         return;
       }
@@ -171,8 +171,8 @@ const Generate = () => {
                 //   }
                 // }}
               ></textarea>
-              <span className="px-1 absolute bottom-2 right-1 text-xs border border-border rounded bg-bg-hover text-text-muted">
-                {topicWordCount > 0 && `word count: ${topicWordCount}`}
+              <span className="px-1 absolute bottom-2 right-1 text-xs rounded text-text-muted">
+                {topicWordCount > 0 && `words: ${topicWordCount}`}
               </span>
             </div>
           </div>
@@ -182,7 +182,7 @@ const Generate = () => {
             {/* Tone  */}
             <div className="w-1/2 flex flex-col">
               <label htmlFor="tone" className="font-semibold">
-                Tone
+                Tone <span className="pl-1 text-text-muted">(Optional)</span>
               </label>
               <select
                 className="mt-2 p-2 bg-bg border border-border rounded focus:outline-primary"
@@ -230,7 +230,7 @@ const Generate = () => {
 
             <div className="relative">
               <textarea
-                className="w-full h-18 mt-2 p-2 pb-5 border border-border-strong focus:outline-primary resize-none scrollbar-none"
+                className="w-full h-20 mt-2 p-2 pb-5 border border-border-strong focus:outline-primary resize-none scrollbar-none"
                 id="instructions"
                 placeholder="E.g. Include examples, statistics, call to action"
                 value={instructions}
