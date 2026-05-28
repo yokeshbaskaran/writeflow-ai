@@ -56,7 +56,7 @@ ${aiResponse?.conclusion ?? ""}
         return;
       }
 
-      const generatedWords = formattedText.split(" ").length;
+      const generatedWords = formattedText.split(" ").length || 0;
       // response data
       const payload = {
         title: generatedContent.title,
