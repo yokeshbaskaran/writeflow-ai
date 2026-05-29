@@ -50,7 +50,7 @@ const Metrics = () => {
 
   return (
     <>
-      <section className="my-3 px-2 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
+      <section className="my-2 px-2 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
         {/* Credits left  */}
         {metricsList.map((item, idx) => (
           <div

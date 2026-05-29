@@ -48,7 +48,7 @@ const Dashboard = () => {
         <section className="md:w-5/12 min-h-0 flex flex-1 flex-col px-3 py-2 pb-2">
           <div className="px-2 shrink-0">
             <h2 className="text-xl font-bold">History Responses:</h2>
-            <p className="my-1 text-text-muted text-base">
+            <p className="my-1 text-text-muted text-sm">
               All your generated content in one place.
             </p>
           </div>
@@ -56,7 +56,7 @@ const Dashboard = () => {
           {/* Divider  */}
           <div className="w-full my-2 border-b border-border"></div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto scrollbar-none">
+          <div className="min-h-0 mb-1 flex-1 overflow-y-auto scrollbar-none">
             {response && <History />}
             {response.length === 0 && <span>No Responses Generated</span>}
           </div>

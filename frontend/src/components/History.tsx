@@ -148,7 +148,7 @@ ${words?.conclusion ?? ""}
       <main>
         {/* History of Responses  */}
         {response?.length > 0 && (
-          <section className="w-full px-2 py-1 overflow-y-auto">
+          <section className="w-full px-1 py-1 overflow-y-auto">
             <div className="flex flex-col gap-4 overflow-y-auto">
               {response &&
                 response?.map((item, idx) => (
