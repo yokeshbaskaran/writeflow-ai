@@ -87,7 +87,7 @@ ${words?.conclusion ?? ""}
   // if words greater than 20, shows ...
   const readMoreWords = (words: string) => {
     // console.log("words:-", words.length);
-    const returnValue = words.length > 45 ? words.slice(0, 45) + "..." : words;
+    const returnValue = words.length > 30 ? words.slice(0, 30) + "..." : words;
     return returnValue;
   };
 
@@ -150,62 +150,62 @@ ${words?.conclusion ?? ""}
         {response?.length > 0 && (
           <section className="w-full px-1 py-1 overflow-y-auto">
             <div className="flex flex-col gap-4 overflow-y-auto">
+              {/* Single Response */}
               {response &&
                 response?.map((item, idx) => (
                   <div
                     key={idx}
-                    className="w-full p-2 flex items-center justify-between bg-bg-soft border border-border rounded-lg"
+                    className="w-full bg-bg-soft border border-border rounded-xl flex flex-col md:flex-row md:items-center md:justify-between p-3 md:p-2"
                   >
-                    <div className="w-2/4 flex items-center">
-                      <div>
-                        <ContentTypeIcon type={item.content_type} />
-                      </div>
-
-                      <div className="w-full mx-4 flex flex-col items-start gap-1">
-                        <p className="font-normal text-sm text-left">
+                    {/* Left */}
+                    <div className="flex items-center md:items-center flex-1">
+                      <ContentTypeIcon type={item.content_type} />
+                      <div className="ml-3 flex-1">
+                        <p className="text-sm">
                           {readMoreWords(item?.content?.title)}
-                          {/* {item?.content?.title} */}
+                          {/* {item.content.title.slice(0, 30)}... */}
                         </p>
 
-                        <div className="w-full flex items-center gap-2">
-                          <span className="w-full rounded-full text-sm font-medium text-text-muted capitalize">
+                        <div className="flex flex-wrap items-center gap-2 mt-1">
+                          <span className="text-sm text-text-muted capitalize">
                             {item?.content_type}
                           </span>
-                          <LuDot size={25} />
-                          <p className="w-full text-text-muted text-sm font-semibold">
-                            {/* {countWords(item.content)} words */}
+
+                          <LuDot size={18} />
+
+                          <span className="text-sm text-text-muted">
                             {item?.words_created} words
-                          </p>
+                          </span>
                         </div>
+
+                        {/* Mobile Date */}
+                        <p className="mt-1 text-xs text-text-muted">
+                          {formatDate(item.created_at)}
+                        </p>
                       </div>
-                    </div>
 
-                    <div className="w-1/4 max-md:hidden px-2 py-4 text-center text-sm text-text-muted">
-                      {formatDate(item.created_at)}
-                    </div>
-
-                    <div className="w-1/4">
-                      <div className="flex items-center justify-center gap-2">
-                        <button className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-blue-600 cursor-pointer">
+                      {/* Actions */}
+                      <div className="flex justify-end gap-2 mt-3 md:mt-0">
+                        <button className="border border-border rounded-lg p-2 cursor-pointer">
                           <PiEye size={17} />
                         </button>
 
                         <button
-                          className="border border-border rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-green-600 cursor-pointer"
                           onClick={() => handleCopiedText(item)}
+                          className="border border-border rounded-lg p-2 cursor-pointer"
                         >
                           {textCopied && copiedId === item._id ? (
-                            <MdDone size={19} />
+                            <MdDone size={18} />
                           ) : (
-                            <BiCopy size={19} />
+                            <BiCopy size={18} />
                           )}
                         </button>
 
                         <button
                           onClick={() => setDeleteId(item._id)}
-                          className="border border-border rounded-lg p-2 text-red-500 transition hover:bg-red-50 hover:text-red-600 cursor-pointer"
+                          className="border border-border rounded-lg p-2 text-red-500 cursor-pointer"
                         >
-                          <IoTrashOutline size={19} />
+                          <IoTrashOutline size={18} />
                         </button>
 
                         {deleteId && (
