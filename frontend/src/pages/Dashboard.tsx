@@ -2,7 +2,7 @@ import History from "../components/History";
 import { useAppContext } from "../context/AppContext";
 
 const Dashboard = () => {
-  const { authUser } = useAppContext();
+  const { authUser, response } = useAppContext();
   const personName = authUser?.username;
 
   return (
@@ -33,7 +33,11 @@ const Dashboard = () => {
         <div className="w-full my-2 border-b border-border"></div>
 
         <div className="h-full overflow-y-auto scrollbar-none pr-2">
-          <History />
+          {response.length > 0 ? (
+            <History />
+          ) : (
+            <span>No Responses Generated</span>
+          )}
         </div>
       </div>
     </div>
