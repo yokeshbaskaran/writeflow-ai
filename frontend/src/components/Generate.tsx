@@ -16,7 +16,7 @@ const typeOptions = [
   "General post",
   "LinkedIn Post",
   "Blog Post",
-  "Create a Tweet(X) post",
+  "Twitter (X) post",
   "Instagram Captions",
   "SEO titles",
   "Resume Bullet Points",
@@ -113,10 +113,10 @@ const Generate = () => {
 
   return (
     <>
-      <section className="w-full py-2 px-2 flex flex-col border border-border rounded">
+      <section className="w-full px-4 py-3 md:p-5 flex flex-col border border-border-strong rounded">
         {/* Content section */}
         <h2 className="text-xl text-primary font-semibold">
-          Generate New Content
+          Generate AI Response
         </h2>
 
         <form
@@ -157,7 +157,7 @@ const Generate = () => {
 
             <div className="relative">
               <textarea
-                className="w-full h-28 mt-2 p-2 pb-5 border border-border-strong rounded outline-primary resize-none scrollbar-none"
+                className="w-full h-24 mt-2 p-2 pb-5 border border-border-strong rounded outline-primary resize-none scrollbar-none"
                 id="topic"
                 placeholder=" Write a blog post about benefits of using Al in daily life"
                 value={topic}
@@ -230,7 +230,7 @@ const Generate = () => {
 
             <div className="relative">
               <textarea
-                className="w-full h-20 mt-2 p-2 pb-5 border border-border-strong focus:outline-primary resize-none scrollbar-none"
+                className="w-full h-17 mt-2 p-2 pb-5 border border-border-strong focus:outline-primary resize-none scrollbar-none"
                 id="instructions"
                 placeholder="E.g. Include examples, statistics, call to action"
                 value={instructions}
@@ -242,7 +242,7 @@ const Generate = () => {
           <button
             disabled={displayText}
             onClick={generateResponse}
-            className={`w-full p-2 text-base text-white bg-primary rounded hover:bg-primary-hover cursor-pointer ${displayText && "opacity-85"}`}
+            className={`w-full p-2 text-base text-white bg-primary rounded hover:bg-primary-hover cursor-pointer ${displayText && "opacity-50"}`}
           >
             {displayText ? "Generating..." : "  Generate Response"}
           </button>
