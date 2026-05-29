@@ -5,7 +5,7 @@ import { RiMenu5Fill, RiAiGenerateText } from "react-icons/ri";
 import { MdOutlineLockPerson } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
 import DarkMode from "./DarkMode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { LuLogOut, LuUserRound } from "react-icons/lu";
 
@@ -17,6 +17,10 @@ const Navbar = () => {
 
   const { pathname } = useLocation();
   // console.log("pathname:", pathname);
+
+  useEffect(() => {
+    localStorage.setItem("theme", "dark");
+  }, []);
 
   const unauthenticatedNav = [
     // {
@@ -225,7 +229,7 @@ const Navbar = () => {
 
           {/* ii) Desktop Navbar  */}
           {/* 1. Project Text Logo  */}
-          <div className="flex items-center gap-2">
+          <div className="max-md:hidden flex items-center gap-2">
             <div className="size-9 rounded-xl bg-linear-to-br from-violet-500 to-indigo-400 flex items-center justify-center shadow-lg shadow-violet-500/30">
               <IoSparklesSharp className="w-5 h-5 text-white" />
             </div>

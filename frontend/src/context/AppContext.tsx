@@ -89,7 +89,6 @@ export const AppContextProvider = ({ children }: AppContextProviderType) => {
 
   useEffect(() => {
     // set dark first
-    localStorage.setItem("theme", "dark");
 
     if (dark) {
       document.documentElement.classList.add("dark");
