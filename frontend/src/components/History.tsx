@@ -1,6 +1,6 @@
 import { PiEye } from "react-icons/pi";
 import { BiCopy } from "react-icons/bi";
-import { IoLogoLinkedin, IoTrashOutline } from "react-icons/io5";
+import { IoTrashOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -13,6 +13,7 @@ import { MdDone } from "react-icons/md";
 import toast from "react-hot-toast";
 import { LuDot } from "react-icons/lu";
 import DeletePopup from "./DeletePopup";
+import ContentTypeIcon from "./ContentTypeIcon";
 
 const RecentResponse = () => {
   const [textCopied, setTextCopied] = useState(false);
@@ -143,10 +144,10 @@ ${words?.conclusion ?? ""}
 
   return (
     <>
-      <main className="">
+      <main>
         {/* History of Responses  */}
         {response?.length > 0 && (
-          <section className="yoki w-200 p-2 overflow-y-auto">
+          <section className="w-200 px-2 py-1 overflow-y-auto">
             <div className="flex flex-col gap-4 overflow-y-auto">
               {response &&
                 response?.map((item, idx) => (
@@ -155,12 +156,12 @@ ${words?.conclusion ?? ""}
                     className="w-full p-2 flex items-center justify-between border border-border rounded-lg"
                   >
                     <div className="w-2/4 flex items-center">
-                      <div className="p-2 text-white bg-blue-700 border rounded-xl">
-                        <IoLogoLinkedin size={25} />
+                      <div>
+                        <ContentTypeIcon type={item.content_type} />
                       </div>
 
                       <div className="w-full mx-4 flex flex-col items-start gap-1">
-                        <p className="font-normal text-base text-center">
+                        <p className="font-normal text-base text-left">
                           {item?.content?.title}
                         </p>
 
@@ -169,7 +170,7 @@ ${words?.conclusion ?? ""}
                             {item?.content_type}
                           </span>
                           <LuDot size={25} />
-                          <p className="w-full text-text-muted text-sm">
+                          <p className="w-full text-text-muted text-sm font-semibold">
                             {/* {countWords(item.content)} words */}
                             {item?.words_created} words
                           </p>

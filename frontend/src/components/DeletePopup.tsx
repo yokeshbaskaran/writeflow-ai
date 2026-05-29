@@ -11,14 +11,15 @@ const DeletePopup = ({ onCancel, onConfirm }: DeleteChatProps) => {
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
       <div className="bg-bg-hover rounded-xl p-10 w-88 shadow-lg">
         <div className="flex flex-col items-center gap-3">
-          <IoWarningOutline size={28} color="red" />
-          <h2 className="text-xl text-text font-semibold text-center">
+          <IoWarningOutline size={30} color="#bb2c36" />
+          <h2 className="text-2xl text-text font-semibold text-center">
             Delete Chat?
           </h2>
 
-          <p className="text-sm text-text text-center mb-6">
-            Are you sure you want to delete? This action cannot be undone.
-          </p>
+          <div className="flex flex-col items-center text-sm text-text-muted text-center mb-6">
+            <p>Are you sure you want to delete?</p>
+            <span>This action cannot be undone.</span>
+          </div>
         </div>
 
         <div className="flex text-text justify-between gap-3">
