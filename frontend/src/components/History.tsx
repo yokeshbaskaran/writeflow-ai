@@ -84,11 +84,12 @@ ${words?.conclusion ?? ""}
     return formattedText;
   };
 
-  // // count the format all words
-  // const countWords = (content: OmitContentType) => {
-  //   const text = getFormattedText(content);
-  //   return text.split(" ").length;
-  // };
+  // if words greater than 20, shows ...
+  const readMoreWords = (words: string) => {
+    // console.log("words:-", words.length);
+    const returnValue = words.length > 45 ? words.slice(0, 45) + "..." : words;
+    return returnValue;
+  };
 
   // copying the response
   const handleCopiedText = async (item: AllResponseType) => {
@@ -147,13 +148,13 @@ ${words?.conclusion ?? ""}
       <main>
         {/* History of Responses  */}
         {response?.length > 0 && (
-          <section className="w-200 px-2 py-1 overflow-y-auto">
+          <section className="w-full px-2 py-1 overflow-y-auto">
             <div className="flex flex-col gap-4 overflow-y-auto">
               {response &&
                 response?.map((item, idx) => (
                   <div
                     key={idx}
-                    className="w-full p-2 flex items-center justify-between border border-border rounded-lg"
+                    className="w-full p-2 flex items-center justify-between bg-bg-soft border border-border rounded-lg"
                   >
                     <div className="w-2/4 flex items-center">
                       <div>
@@ -161,11 +162,12 @@ ${words?.conclusion ?? ""}
                       </div>
 
                       <div className="w-full mx-4 flex flex-col items-start gap-1">
-                        <p className="font-normal text-base text-left">
-                          {item?.content?.title}
+                        <p className="font-normal text-sm text-left">
+                          {readMoreWords(item?.content?.title)}
+                          {/* {item?.content?.title} */}
                         </p>
 
-                        <div className="w-3/4 flex items-center gap-2">
+                        <div className="w-full flex items-center gap-2">
                           <span className="w-full rounded-full text-sm font-medium text-text-muted capitalize">
                             {item?.content_type}
                           </span>
