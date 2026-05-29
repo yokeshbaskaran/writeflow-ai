@@ -33,12 +33,12 @@ const Dashboard = () => {
             <section className="p-2 grid grid-cols-1 xl:grid-cols-3 gap-3">
               {/* Usage Overview */}
               <div className="xl:col-span-2 rounded-2xl border border-border bg-bg-soft p-4">
-                <LineChart />
+                <LineChart contents={response} />
               </div>
 
               {/* Content Type */}
               <div className="rounded-2xl border border-border bg-bg-soft p-3">
-                <DoughnutChart />
+                <DoughnutChart contents={response} />
               </div>
             </section>
           </div>

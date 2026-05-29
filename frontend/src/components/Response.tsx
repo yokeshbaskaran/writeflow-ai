@@ -149,12 +149,13 @@ ${aiResponse?.conclusion ?? ""}
                 ))}
 
                 <h3 className="font-semibold mt-4 mb-2">Conclusion</h3>
+
                 {/* divider  */}
                 <div className="my-2 border-b border-border"></div>
                 <p>{aiResponse?.conclusion}</p>
               </article>
 
-              <div className="mt-3 mx-3 absolute top-0 right-0">
+              <div className="mt-6 mx-2 absolute top-0 right-0">
                 <button
                   onClick={handleCopiedText}
                   className="p-2 bg-bg  text-primary border-2 border-border rounded-4xl hover:text-white hover:bg-primary cursor-pointer"
@@ -171,7 +172,7 @@ ${aiResponse?.conclusion ?? ""}
 
               <button
                 onClick={() => saveResponse(aiResponse)}
-                disabled={saved}
+                // disabled={saved}
                 className={`p-2 text-sm text-white bg-primary rounded ${
                   saved
                     ? "opacity-65 cursor-not-allowed"
