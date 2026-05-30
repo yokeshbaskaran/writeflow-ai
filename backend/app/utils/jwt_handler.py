@@ -1,6 +1,6 @@
 from jose import jwt
 from datetime import datetime, timedelta
-from config import SECRET_KEY, ALGORITHM
+from app.config import SECRET_KEY, ALGORITHM
 
 
 def create_token(email: str):

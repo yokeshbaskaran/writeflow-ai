@@ -1,7 +1,7 @@
 # generating ai response
-from models.content_model import GenerateContentRequest
+from app.models.content_model import GenerateContentRequest
 from groq import Groq
-from config import GROQ_API_KEY
+from app.config import GROQ_API_KEY
 
 
 # user prompt

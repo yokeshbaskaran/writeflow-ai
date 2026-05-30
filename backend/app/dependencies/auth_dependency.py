@@ -1,8 +1,8 @@
 from jose import jwt, JWTError
 from fastapi import Header
-from config import SECRET_KEY, ALGORITHM
+from app.config import SECRET_KEY, ALGORITHM
 from fastapi import HTTPException
-from db.database import users_collection
+from app.db.database import users_collection
 
 
 # checks current user is authorized

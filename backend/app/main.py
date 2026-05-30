@@ -1,9 +1,9 @@
 # main.py file
 from fastapi import FastAPI
-from routes.auth_routes import router as auth_router
-from routes.user_routes import router as user_router
+from app.routes.auth_routes import router as auth_router
+from app.routes.user_routes import router as user_router
 from fastapi.middleware.cors import CORSMiddleware
-from config import LIVE_PAGE_URL
+from app.config import LIVE_PAGE_URL
 
 # creating app
 app = FastAPI()

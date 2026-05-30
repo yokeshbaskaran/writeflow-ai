@@ -1,11 +1,11 @@
 # User Routes API
 
 from fastapi import APIRouter, Depends, HTTPException
-from dependencies.auth_dependency import get_current_user
-from models.content_model import GenerateContentRequest, SavedResponseRequest
-from services.ai_service import build_prompt, generate_contents
+from app.dependencies.auth_dependency import get_current_user
+from app.models.content_model import GenerateContentRequest, SavedResponseRequest
+from app.services.ai_service import build_prompt, generate_contents
 from datetime import datetime
-from db.database import users_collection, contents_collection
+from app.db.database import users_collection, contents_collection
 from bson import ObjectId
 
 router = APIRouter()
