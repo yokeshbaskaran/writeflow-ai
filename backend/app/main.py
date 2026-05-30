@@ -1,16 +1,18 @@
 # main.py file
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.routes.auth_routes import router as auth_router
 from app.routes.user_routes import router as user_router
-from fastapi.middleware.cors import CORSMiddleware
-from app.config import LIVE_PAGE_URL
+from app.config import FRONT_END_URL
 
 # creating app
 app = FastAPI()
 
+print("LIVE_PAGE_URL:", FRONT_END_URL)
+
 # CORS
 origins = [
-    LIVE_PAGE_URL,
+    FRONT_END_URL,
     "http://localhost:5173",
 ]
 
