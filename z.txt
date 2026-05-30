@@ -1,0 +1,53 @@
+Backend Deployment (Render Web Service)
+-------
+1. Create requirements.txt
+-------
+
+- Inside backend/ (app): pip freeze > requirements.txt
+- Verify it contains your packages:
+---
+fastapi
+uvicorn
+sqlalchemy
+python-dotenv
+
+
+-------
+2. Add CORS
+-------
+
+In your FastAPI app: from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://writeflow-ai.onrender.com",
+        "http://localhost:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+----------
+3. Render Backend Settings
+----------
+
+Root: backend
+Build Command: pip install -r requirements.txt
+
+Start Command
+---
+=> If your FastAPI file is:
+
+backend/app/main.py -> uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+backend/main.py     -> uvicorn main:app --host 0.0.0.0 --port $PORT
+
+
+
+Frontend Deployment (Render Static Site)
+-------
+Root Directory:     frontend
+Build Command:      npm install && npm run build
+Publish Directory:  dist
