@@ -1,8 +1,8 @@
 # WriteFlow.AI
 
-- WriteFlow.AI - AI-powered content generation platform built with React, TypeScript, and Python.
+AI-powered content generation platform built with React, TypeScript, and Python.
 
-# 🚀 Features
+## 🚀 Features
 
 - Secure Authentication
 - AI Content Generation
@@ -14,9 +14,9 @@
 - Protected Routes
 - Real-Time Content Generation
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-## Frontend
+### Frontend
 
 - React.js
 - TypeScript
@@ -26,19 +26,19 @@
 - Axios
 - Vite
 
-## Backend
+### Backend
 
 - Python
 - FastAPI
 - JWT Authentication
 - OpenAI / Groq APIs
 - REST APIs
-- Render
-- MongoDB
+- Databae: MongoDB
+- Deployment: Render
 
-# 📦 Installation & Setup
+## 📦 Installation & Setup
 
-## Clone the repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/yokeshbaskaran/writeflow-ai.git
@@ -56,15 +56,15 @@ npm install framer-motion
 npm run dev -- --host # For Mobile view:
 ```
 
-# 🌐 Live Demo
+## 🌐 Live Demo
 
-<!-- 🔗 Live Website: https://chatai-assistant.vercel.app -->
+🔗 Live Website:
 
-# 🖼️ Preview
+## 🖼️ Preview
 
 <!--
 ![Image](https://github.com/user-attachments/assets/53f2e997-cadc-44b7-9cd2-8cf56f5a83da) -->
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 Developed by **Yokesh Baskaran** 🚀
