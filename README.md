@@ -62,6 +62,8 @@ npm run dev -- --host # For Mobile view:
 
 ## 🖼️ Preview
 
+Preview of live website
+
 <!--
 ![Image](https://github.com/user-attachments/assets/53f2e997-cadc-44b7-9cd2-8cf56f5a83da) -->
 
