@@ -53,7 +53,8 @@ npm install react-icons --save
 npm install react-router-dom
 npm install axios
 npm install framer-motion
-npm run dev -- --host # For Mobile view:
+# For Mobile view:
+npm run dev -- --host
 ```
 
 ## 🌐 Live Demo
