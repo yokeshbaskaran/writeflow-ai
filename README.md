@@ -63,4 +63,4 @@ npm run dev -- --host
 
 ## 🖼️ Preview
 
-[Image](https://github.com/user-attachments/assets/86fd8c92-5923-4217-9af6-cc3a9104f0e9)
+![Image](https://github.com/user-attachments/assets/86fd8c92-5923-4217-9af6-cc3a9104f0e9)
